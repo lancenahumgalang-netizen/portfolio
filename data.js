@@ -18,7 +18,7 @@ window.PORTFOLIO = {
   hero: {
     role: "Senior High School graduate · La Trinidad, Benguet",
     program: { short: "BSIT", full: "Bachelor of Science in Information Technology", major: "Major in Network and Security" },
-    photo: "images/me.jpg"         // your profile picture
+    photo: "me.jpg"         // your profile picture
   },
 
   about: {
