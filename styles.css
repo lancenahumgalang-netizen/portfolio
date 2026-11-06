@@ -743,3 +743,100 @@ main.wrap>.view>*{flex-shrink:0}
 footer{padding-block:clamp(2px,.6vh,8px)}
 
 @media(max-height:700px){.split-txt .program em{display:none}.split-txt .big-intro{margin-block:6px 8px}.split-pic .portrait.photo{width:min(100%,56vh,440px)}.bigbtn{min-height:46px}}
+
+/* ---- page 2: about me + skills on one screen; page 3: education ---- */
+.merge{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,4vw,56px);align-items:start;margin-top:clamp(8px,2vh,22px)}
+.m-about .copy p{font-size:clamp(.95rem,min(1.3vw,2.3vh),1.1rem);line-height:1.5;margin:0 0 .6em}
+.m-about .copy p+p{color:var(--muted)}
+.m-about .facts{margin-top:clamp(8px,1.6vh,16px);display:block}
+.m-about .facts>div{display:grid;grid-template-columns:100px minmax(0,1fr);gap:12px;padding:clamp(5px,1vh,9px) 0;border-bottom:1px dashed var(--line)}
+.m-about .facts dd{text-align:left;margin:0;font-size:clamp(.88rem,min(1.2vw,2.1vh),1rem)}
+.m-about .focus{margin-top:clamp(10px,2vh,18px)}
+.m-skills .subhead{font-size:clamp(1rem,2.3vh,1.25rem);margin:0 0 clamp(4px,1vh,10px)}
+.m-skills .sgroups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(16px,3vw,36px)}
+.m-skills .sg{padding:clamp(6px,1.4vh,14px) 0;border-top:1px solid var(--line);border-bottom:0}
+.m-skills .sg ul{gap:clamp(2px,.6vh,6px)}
+.m-skills .sg li{font-size:clamp(.82rem,min(1.1vw,2vh),.96rem)}
+.m-skills .sg h4{margin-bottom:clamp(2px,.6vh,8px)}
+@media(max-width:900px){.merge{grid-template-columns:minmax(0,1fr)}.m-skills .sgroups{grid-template-columns:minmax(0,1fr)}}
+#v-education .edu{margin-top:clamp(8px,2vh,24px)}
+#v-education .edu article{padding:clamp(10px,2.4vh,26px) 0}
+#v-education .edu .nt{display:block}
+@media(max-height:700px){#v-education .edu .nt{display:none}}
+/* bottom buttons */
+.bigwrap{display:flex;gap:12px}
+.bigwrap .bigbtn{flex:1}
+.bigwrap [hidden]{display:none}
+.bigbtn.ghost{background:transparent;color:var(--fg);border:2px solid var(--fg);box-shadow:none;flex:0 1 38%}
+.bigbtn.ghost:hover{background:var(--fg);color:var(--bg)}
+@media(max-width:560px){.bigbtn{font-size:.85rem;gap:8px;letter-spacing:.03em}.bigbtn.ghost{flex-basis:44%}}
+
+/* ---- compact pages 2 and 3 ---- */
+#v-about .head h2,#v-education .head h2{font-size:clamp(1.6rem,min(4vw,5.2vh),3rem)}
+#v-about .head,#v-education .head{margin-bottom:0}
+.m-about .focus{display:none}
+.m-about .copy p{font-size:clamp(.9rem,min(1.2vw,2.1vh),1.05rem);line-height:1.45}
+.m-about .facts>div{padding:clamp(4px,.8vh,8px) 0}
+.bigwrap:has(#bigNext[hidden]) .ghost{flex:1}
+#v-education .edu article{padding:clamp(6px,1.5vh,22px) 0}
+@media(max-height:820px){#v-education .edu .nt{display:none}}
+@media(max-width:900px){.m-about .copy p{font-size:.88rem}.m-skills .sg li{font-size:.84rem}}
+@media(max-width:900px){
+  .merge{gap:8px;margin-top:6px}
+  .m-skills .sgroups{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+  .m-skills .sg{padding:6px 0}
+  .m-skills .sg li{font-size:.76rem;line-height:1.3}
+  .m-skills .sg h4{font-size:10px}
+  .m-skills .subhead{font-size:.95rem;margin-bottom:0}
+  .m-about .facts>div{grid-template-columns:78px minmax(0,1fr);gap:8px;padding:3px 0}
+  .m-about .facts dt{font-size:10px}
+  .m-about .facts dd{font-size:.8rem}
+  .m-about .copy p{margin-bottom:.35em;font-size:.82rem;line-height:1.35}
+  #v-about .head h2,#v-education .head h2{font-size:1.5rem}
+  #v-about .head .eyebrow,#v-education .head .eyebrow{display:none}
+}
+
+/* ---- personal information: smaller type, tighter gaps, centred block ---- */
+#v-about .head h2{font-size:clamp(1.5rem,min(2.8vw,4.2vh),2.1rem)}
+#v-about .head .eyebrow{margin-bottom:4px}
+#v-about>.head{margin-top:auto}
+#v-about>.merge{margin-bottom:auto;margin-top:clamp(10px,2vh,18px);gap:clamp(20px,3.5vw,48px)}
+#v-about .m-about .copy p{font-size:clamp(.88rem,min(1.05vw,1.9vh),1rem);line-height:1.5;margin-bottom:.5em}
+#v-about .m-about .facts{margin-top:clamp(6px,1.2vh,12px)}
+#v-about .m-about .facts>div{padding:clamp(4px,.8vh,7px) 0}
+#v-about .m-about .facts dt{font-size:11px}
+#v-about .m-about .facts dd{font-size:clamp(.84rem,min(1vw,1.8vh),.95rem)}
+#v-about .m-skills .subhead{font-size:clamp(.95rem,2vh,1.1rem)}
+#v-about .m-skills .sg{padding:clamp(6px,1.1vh,10px) 0}
+#v-about .m-skills .sg h4{font-size:11px;margin-bottom:clamp(2px,.5vh,5px)}
+#v-about .m-skills .sg li{font-size:clamp(.82rem,min(.95vw,1.75vh),.92rem);line-height:1.35}
+#v-about .m-skills .sg ul{gap:clamp(1px,.4vh,4px)}
+/* keep the block at the top so the blank space stays small */
+#v-about>.head{margin-top:clamp(4px,2vh,24px)}
+#v-about>.merge{margin-bottom:0}
+
+/* ---- personal information: BIG readable type that scales with the screen ---- */
+@media(min-width:901px){
+  #v-about{--s:clamp(15px,min(1.3vw,2.4vh),28px)}
+  #v-about>.head{margin-top:clamp(0px,1vh,10px)}
+  #v-about .head .eyebrow{font-size:calc(var(--s)*.6)}
+  #v-about .head h2{font-size:calc(var(--s)*2)}
+  #v-about>.merge{margin-top:calc(var(--s)*.7);gap:calc(var(--s)*2);grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+  #v-about .m-about .copy p{font-size:calc(var(--s)*1.05);line-height:1.45;margin-bottom:.5em}
+  #v-about .m-about .facts{margin-top:calc(var(--s)*.5)}
+  #v-about .m-about .facts>div{grid-template-columns:calc(var(--s)*5.6) minmax(0,1fr);padding:calc(var(--s)*.38) 0}
+  #v-about .m-about .facts dt{font-size:calc(var(--s)*.6)}
+  #v-about .m-about .facts dd{font-size:var(--s);line-height:1.35}
+  #v-about .m-skills .subhead{font-size:calc(var(--s)*1.2);margin-bottom:calc(var(--s)*.2)}
+  #v-about .m-skills .sgroups{gap:0 calc(var(--s)*1.4)}
+  #v-about .m-skills .sg{padding:calc(var(--s)*.45) 0}
+  #v-about .m-skills .sg h4{font-size:calc(var(--s)*.64);margin-bottom:calc(var(--s)*.2)}
+  #v-about .m-skills .sg li{font-size:calc(var(--s)*.95);line-height:1.3}
+  #v-about .m-skills .sg ul{gap:calc(var(--s)*.12)}
+}
+@media(max-width:900px){
+  #v-about .m-about .copy p{font-size:.95rem;line-height:1.4}
+  #v-about .m-about .facts dd{font-size:.9rem}
+  #v-about .m-skills .sg li{font-size:.85rem}
+  #v-about .head h2{font-size:1.6rem}
+}

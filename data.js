@@ -50,6 +50,7 @@ window.PORTFOLIO = {
   // Educational attainment. Shown on the home page (newest first).
   education: {
     heading: "Educational attainment",
+    title: "My learning journey.",
     list: [
       { when: "2026 – Present", level: "College", school: "University of the Cordilleras", place: "Baguio City", note: "BS Information Technology · Major in Network and Security · Currently enrolled" },
       { when: "2024 – 2026", level: "Senior High School", school: "Benguet National High School", place: "La Trinidad, Benguet, 2601", note: "TVL – ICT strand · Graduated 2026 · High Honors in Grade 12" },
