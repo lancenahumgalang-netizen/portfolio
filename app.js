@@ -126,11 +126,49 @@
       '<h1 class="sname"><b>' + esc(n.first + ' ' + n.middle) + '</b><span>' + esc(n.last) + '</span></h1>' +
       '<div class="program"><b>' + esc(D.hero.program.short) + '</b> <span>' + esc(D.hero.program.full) + '</span><em>' + esc(D.hero.program.major) + '</em></div>' +
       '<p class="role">' + esc(D.hero.role) + '</p>' +
-      contact + '</div></div>');
+      '<p class="big-intro">' + esc(D.hero.intro) + '</p>' + contact + '</div></div>');
+  }
+
+  function about() {
+    var a = D.about, b = a.birth || {}, f = a.family || {};
+    var facts = each(a.facts, function (x) {
+      return '<div><dt>' + esc(x.label) + '</dt><dd>' + esc(x.value) + '</dd></div>';
+    });
+    if (b.month && b.day) {
+      facts += '<div><dt>Born</dt><dd>' + MONTHS[b.month - 1] + ' ' + b.day + '</dd></div>';
+      if (b.year) { facts += '<div><dt>Age</dt><dd>' + age(b) + '</dd></div>'; }
+    }
+    var stats = has(a.stats) ? '<div class="stats">' + each(a.stats, function (s) {
+      return '<div class="stat"><b data-count="' + esc(s.value) + '" data-suffix="' + esc(s.suffix || '') + '">' + esc(s.value) + esc(s.suffix || '') + '</b><span>' + esc(s.label) + '</span></div>';
+    }) + '</div>' : '';
+    var focus = has(a.focus) ? '<div class="focus reveal">' + each(a.focus, function (x) {
+      return '<div><b>' + esc(x.label) + '</b><span>' + esc(x.text) + '</span></div>';
+    }) + '</div>' : '';
+    var ed = D.education, edu = '';
+    if (ed && has(ed.list)) {
+      edu = '<div class="edublock reveal"><h3 class="subhead">' + esc(ed.heading) + '</h3><div class="edu">' + each(ed.list, function (e) {
+        return '<article><div class="when">' + esc(e.when) + '</div><div><h3>' + esc(e.level) + '</h3><div class="org">' + esc(e.school) + '</div>' +
+          (e.place ? '<p class="nt">' + esc(e.place) + '</p>' : '') + (e.note ? '<p class="enote">' + esc(e.note) + '</p>' : '') + '</div></article>';
+      }) + '</div></div>';
+    }
+    var sk = D.skills, skills = '';
+    if (sk && has(sk.groups)) {
+      skills = '<div class="skillsblock reveal"><h3 class="subhead">' + esc(sk.heading || 'Skills') + '</h3><div class="sgroups">' +
+        each(sk.groups, function (g) {
+          return '<div class="sg"><h4>' + esc(g.title) + '</h4><ul>' + each(g.items, function (i) { return '<li>' + esc(i) + '</li>'; }) + '</ul></div>';
+        }) + '</div></div>';
+    }
+    return section('about', 'Personal information',
+      head('Personal information', a.heading) +
+      '<div class="blk" data-tab="About me"><div class="about"><div class="reveal"><div class="copy">' + each(a.paragraphs, function (p) { return '<p>' + esc(p) + '</p>'; }) + '</div>' +
+      '<dl class="facts">' + facts + '</dl>' + stats + '</div>' +
+      '</div>' + focus + '</div>' +
+      (edu ? '<div class="blk" data-tab="Education">' + edu + '</div>' : '') +
+      (skills ? '<div class="blk" data-tab="Skills">' + skills + '</div>' : ''));
   }
 
   /* ---------- build ---------- */
-  var body = home();
+  var body = home() + about();
   var full = D.name.first + ' ' + D.name.middle + ' ' + D.name.last;
 
   var menu = '<nav aria-label="Pages"><div class="pill">' +
@@ -139,7 +177,8 @@
     '<svg class="moon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8z" fill="currentColor"/></svg>' +
     '<svg class="sun" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><g stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1"/></g></svg>' +
     '<span class="knob" aria-hidden="true"></span></button>' +
-    '</div></nav>';
+        '<div class="steps"><button type="button" class="step" id="stPrev" aria-label="Previous page"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+    '<button type="button" class="step" id="stNext" aria-label="Next page"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div></nav>';
 
   var banner = D.showSampleBanner ? '<div class="sample"><b>SAMPLE</b>Placeholder details. Replace everything with yours.</div>' : '';
 
@@ -148,6 +187,7 @@
     drift += '<i style="left:' + (6 + ci * 11) % 96 + '%;--s:' + (22 + (ci * 7) % 30) + 'px;--d:' + (16 + (ci * 5) % 14) + 's;--w:-' + (ci * 3.1).toFixed(1) + 's;--r:' + (ci % 2 ? 1 : -1) + '">' + CLOVER + '</i>';
   }
   app.innerHTML = '<div class="toast" id="toast" role="status"></div><div class="halftone" aria-hidden="true"></div><div class="drift" aria-hidden="true">' + drift + '</div>' + banner + menu + '<main class="wrap">' + body +
+    '<div class="bigwrap"><button type="button" class="bigbtn" id="bigBtn" data-go="about"><span class="bl" id="bigLbl"></span><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>' +
     '<footer><span>© ' + esc(D.year) + ' ' + esc(full) + '</span><span>Made with HTML, CSS and JavaScript</span></footer></main>' +
     '<div class="wipe" aria-hidden="true"><div class="wp a"></div><div class="wp b"><div class="wsp"></div><div class="wc">' + CLOVER + '</div><span id="wl"></span></div></div>';
 
@@ -225,7 +265,14 @@
 
   // previous / next buttons live in the top bar, so there is no need to scroll
   var stPrev = document.getElementById('stPrev'), stNext = document.getElementById('stNext');
+  var bigBtn = document.getElementById('bigBtn'), bigLbl = document.getElementById('bigLbl');
   function setSteps(key) {
+    if (bigBtn) {
+      var back = keys.indexOf(key) > 0, t = back ? keys[keys.indexOf(key) - 1] : keys[1];
+      bigBtn.setAttribute('data-go', t);
+      bigBtn.classList.toggle('back', back);
+      bigLbl.textContent = back ? 'Back: ' + labels[t] : 'Next: ' + labels[t];
+    }
     if (!stPrev || !stNext) { return; }
     var i = keys.indexOf(key), p = keys[(i + keys.length - 1) % keys.length], n = keys[(i + 1) % keys.length];
     stPrev.setAttribute('data-go', p); stPrev.title = 'Previous: ' + labels[p];

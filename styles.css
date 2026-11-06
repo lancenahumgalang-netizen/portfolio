@@ -571,7 +571,6 @@ footer{margin-top:12px;padding-block:10px}
 .facts-card .crow.fact{grid-template-columns:110px minmax(0,1fr)}
 .facts-card .crow.fact span{font-size:1rem}
 .home-cta{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
-.links a{pointer-events:none}
 @media(max-width:560px){.facts-card .crow.fact{grid-template-columns:1fr;gap:2px}}
 
 /* ---- split layout: picture left, biography + contact right ---- */
@@ -696,3 +695,51 @@ main.wrap{max-width:1360px}
 @media(max-width:820px){.program{margin-top:8px}.program b{font-size:1rem}.program span{font-size:.88rem}.program em{font-size:.82rem}.program+.role{margin:6px 0 10px}}
 @media(max-height:700px){.program+.role{display:none}}
 @media(max-height:700px){.program{margin-bottom:clamp(10px,2.4vh,18px)}}
+
+/* ---- two pages: personal information page fits the screen too ---- */
+main.wrap>.view{flex-direction:column;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+main.wrap>.view .split{flex:1 0 auto}
+#app>nav .pill{max-width:100%}
+main.wrap>.view>*{flex-shrink:0}
+.tabs{margin-bottom:clamp(10px,2vh,22px)}
+.sgroups{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 28px}
+.sg{padding:clamp(10px,2vh,20px) 0}
+.sg:last-child{grid-column:auto}
+.sg:last-child ul{grid-template-columns:minmax(0,1fr)}
+.sg ul{gap:clamp(4px,.9vh,8px)}
+.sg li{font-size:clamp(.88rem,min(1.2vw,2.3vh),1rem)}
+@media(min-width:1100px){.sgroups{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tabp .edublock,.tabp .skillsblock,.tabp>.focus{margin-top:0}
+.about+.focus,.tabp .focus{margin-top:clamp(12px,2.5vh,24px)}
+
+/* ---- biography back on the home page ---- */
+.split-txt .big-intro{margin:clamp(8px,1.6vh,14px) 0 clamp(10px,2vh,18px);font-size:clamp(.92rem,min(1.3vw,2.2vh),1.12rem);line-height:1.5}
+.split-txt .sname{font-size:clamp(2.2rem,min(5vw,10.5vh),4.8rem)}
+.split-txt .program+.role{margin-bottom:0}
+.split-txt .homec{padding-block:clamp(4px,.9vh,10px)}
+.split-txt .crow{padding-block:clamp(4px,.9vh,9px)}
+@media(max-height:820px){.split-txt .role,.split-txt .program em{display:none}}
+@media(max-width:820px){.split-txt .big-intro{font-size:clamp(.8rem,1.9vh,.92rem);line-height:1.4;margin:6px 0 8px}}
+@media(max-width:820px) and (max-height:760px){.split-txt .program span,.split-txt .program em{display:none}}
+@media(max-width:820px){.split-txt .role{display:none}.split-txt .program span,.split-txt .program em{display:none}.split-txt .program b{font-size:.95rem}.split-pic .portrait.photo{width:min(30vw,19vh,170px)}.split-txt .big-intro{font-weight:500}}
+
+/* ---- compact education list (4 entries) ---- */
+.edu article{padding:clamp(8px,1.9vh,22px) 0;gap:clamp(6px,2vw,24px)}
+.edu h3{font-size:clamp(1.05rem,2.6vh,1.3rem)}
+.edu .nt{margin-top:2px}
+.edu .enote{margin-top:4px}
+@media(max-height:760px){.edu .nt{display:none}.edu .enote{margin-top:2px}}
+@media(max-width:820px){.edu .nt{display:none}.edu article{padding:8px 0}.edu .enote{font-size:11px}.edu .when{padding-top:0}}
+
+/* ---- big next / previous button ---- */
+.bigwrap{flex:none;padding:clamp(4px,1vh,10px) 0}
+.bigbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:14px;min-height:clamp(48px,7.5vh,64px);border-radius:999px;border:0;cursor:pointer;
+  background:var(--accent);color:var(--on-accent);font-family:var(--display);font-stretch:85%;font-weight:800;font-size:clamp(1rem,2.6vh,1.25rem);letter-spacing:.06em;text-transform:uppercase;
+  box-shadow:0 8px 24px rgba(0,0,0,.22);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,gap .25s}
+.bigbtn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(0,0,0,.3);gap:22px}
+.bigbtn:active{transform:translateY(0) scale(.99)}
+.bigbtn:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+.bigbtn.back svg{order:-1;transform:scaleX(-1)}
+footer{padding-block:clamp(2px,.6vh,8px)}
+
+@media(max-height:700px){.split-txt .program em{display:none}.split-txt .big-intro{margin-block:6px 8px}.split-pic .portrait.photo{width:min(100%,56vh,440px)}.bigbtn{min-height:46px}}

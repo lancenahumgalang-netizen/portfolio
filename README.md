@@ -12,7 +12,7 @@ A one-page portfolio: portrait on the left of the hero, intro, quick facts, educ
 | `images/` | Put your photo here | Add files |
 
 ## Your photo
-Your profile picture is `images/me.jpg` (set in `data.js` as `photo`). Replace the file to change it.
+Your profile picture is `me.jpg` (set in `data.js` as `photo`). Replace the file to change it.
 
 ## Other edits
 - Facebook link: paste your profile address in `facebook.link` in `data.js`.
