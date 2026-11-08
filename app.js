@@ -130,39 +130,50 @@
   }
 
   function about() {
-    var a = D.about;
-    var facts = each(a.facts, function (x) {
-      return '<div><dt>' + esc(x.label) + '</dt><dd>' + esc(x.value) + '</dd></div>';
-    });
-    var focus = has(a.focus) ? '<div class="focus">' + each(a.focus, function (x) {
-      return '<div><b>' + esc(x.label) + '</b><span>' + esc(x.text) + '</span></div>';
-    }) + '</div>' : '';
-    var sk = D.skills, skills = '';
-    if (sk && has(sk.groups)) {
-      skills = '<div class="m-skills"><h3 class="subhead">' + esc(sk.heading || 'Skills') + '</h3><div class="sgroups">' +
-        each(sk.groups, function (g) {
-          return '<div class="sg"><h4>' + esc(g.title) + '</h4><ul>' + each(g.items, function (i) { return '<li>' + esc(i) + '</li>'; }) + '</ul></div>';
-        }) + '</div></div>';
+    var a = D.about, M = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var age = '', bd = '';
+    if (a.birth && a.birth.year) {
+      var now = new Date(); age = now.getFullYear() - a.birth.year;
+      if (now.getMonth() + 1 < a.birth.month || (now.getMonth() + 1 === a.birth.month && now.getDate() < a.birth.day)) { age--; }
+      bd = M[a.birth.month - 1] + ' ' + a.birth.day + ', ' + a.birth.year;
     }
+    var facts = each(a.facts || [], function (x) {
+      var v = String(x.value).replace('{age}', age).replace('{birthday}', bd);
+      return '<div><dt>' + esc(x.label) + '</dt><dd>' + esc(v) + '</dd></div>';
+    });
     return section('about', 'Personal information',
-      head('Personal information', a.heading) +
-      '<div class="merge"><div class="m-about"><div class="copy">' + each(a.paragraphs, function (p) { return '<p>' + esc(p) + '</p>'; }) + '</div>' +
-      '<dl class="facts">' + facts + '</dl>' + focus + '</div>' + skills + '</div>');
+      head('Personal information', a.heading || 'Personal Information') +
+      '<dl class="pinfo">' + facts + '</dl>');
   }
 
   function education() {
-    var ed = D.education;
+    var ed = D.education, acts = D.activities;
     if (!ed || !has(ed.list)) { return ''; }
-    return section('education', 'Educational attainment',
-      head('Educational attainment', ed.title || 'My learning journey.') +
-      '<div class="edu">' + each(ed.list, function (e) {
-        return '<article><div class="when">' + esc(e.when) + '</div><div><h3>' + esc(e.level) + '</h3><div class="org">' + esc(e.school) + '</div>' +
-          (e.place ? '<p class="nt">' + esc(e.place) + '</p>' : '') + (e.note ? '<p class="enote">' + esc(e.note) + '</p>' : '') + '</div></article>';
-      }) + '</div>');
+    var line = '<ol class="eduline">' + each(ed.list, function (x) {
+      return '<li><div class="lv">' + esc(x.level) + '</div><div class="sc">' + esc(x.school) + '</div>' +
+        '<div class="nt">' + esc(x.when + (x.note ? ' · ' + x.note : '')) + '</div></li>';
+    }) + '</ol>';
+    var tabs = '', panes = '';
+    if (has(acts)) {
+      tabs = '<div class="atabs" role="tablist">' + each(acts, function (g, i) {
+        return '<button type="button" class="atab" role="tab" aria-selected="' + (i === 0) + '">' + esc(g.key) + ' <b>' + g.items.length + '</b></button>';
+      }) + '</div>';
+      panes = each(acts, function (g, i) {
+        return '<div class="apane" role="tabpanel"' + (i ? ' hidden' : '') + '>' +
+          '<button type="button" class="amain" aria-label="Zoom certificate"><img alt=""></button>' +
+          '<div class="aside"><div class="acap"><div class="at"></div><div class="ad"></div><div class="ac"></div></div>' +
+          '<div class="athumbs">' + each(g.items, function (it) {
+            return '<button type="button" class="ath" data-img="' + esc(it.img) + '" data-title="' + esc(it.title) + '" data-detail="' + esc(it.detail) + '"><img src="' + esc(it.img) + '" alt="' + esc(it.title) + '" loading="lazy"></button>';
+          }) + '</div></div></div>';
+      });
+    }
+    return section('education', 'Educational Attainment',
+      head('Educational attainment', ed.title || 'Educational Attainment') + line +
+      (tabs ? '<div class="acts">' + tabs + panes + '</div>' : ''));
   }
 
   /* ---------- build ---------- */
-  var body = home() + about();
+  var body = home() + about() + education();
   var full = D.name.first + ' ' + D.name.middle + ' ' + D.name.last;
 
   var menu = '<nav aria-label="Pages"><div class="pill">' +
@@ -171,8 +182,7 @@
     '<svg class="moon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8z" fill="currentColor"/></svg>' +
     '<svg class="sun" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><g stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1"/></g></svg>' +
     '<span class="knob" aria-hidden="true"></span></button>' +
-        '<div class="steps"><button type="button" class="step" id="stPrev" aria-label="Previous page"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
-    '<button type="button" class="step" id="stNext" aria-label="Next page"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div></nav>';
+    '</div></nav>';
 
   var banner = D.showSampleBanner ? '<div class="sample"><b>SAMPLE</b>Placeholder details. Replace everything with yours.</div>' : '';
 
@@ -398,6 +408,33 @@
     });
   });
   box.addEventListener('click', closeBox);
+  // education page: tabs, thumbnails and zoom
+  [].slice.call(document.querySelectorAll('.acts')).forEach(function (acts) {
+    var tabs = [].slice.call(acts.querySelectorAll('.atab')), panes = [].slice.call(acts.querySelectorAll('.apane'));
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (x, j) { x.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+        panes.forEach(function (p, j) { p.hidden = j !== i; });
+      });
+    });
+    panes.forEach(function (p) {
+      var main = p.querySelector('.amain img'), th = [].slice.call(p.querySelectorAll('.ath'));
+      function pick(k) {
+        th.forEach(function (b, j) { b.classList.toggle('on', j === k); });
+        var b = th[k]; main.src = b.getAttribute('data-img'); main.alt = b.getAttribute('data-title');
+        p.querySelector('.at').textContent = b.getAttribute('data-title');
+        p.querySelector('.ad').textContent = b.getAttribute('data-detail');
+        p.querySelector('.ac').textContent = (k + 1) + ' of ' + th.length + ' · click the picture to zoom';
+      }
+      th.forEach(function (b, k) { b.addEventListener('click', function () { pick(k); }); });
+      p.querySelector('.amain').addEventListener('click', function () {
+        box.querySelector('img').src = main.src; box.hidden = false; document.documentElement.style.overflow = 'hidden';
+        box.querySelector('.lb-close').focus();
+      });
+      if (th.length) { pick(0); }
+    });
+  });
+
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeBox(); } });
 
   // copy buttons
