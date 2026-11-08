@@ -917,3 +917,35 @@ main.wrap>#v-education>.acts{flex:1 1 0;min-height:0;display:flex;flex-direction
 @media(max-height:700px){.eduline .nt{display:block}}
 @media(max-width:900px){.athumbs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-height:700px){#v-education{--s:clamp(15px,min(1.4vw,2.5vh),30px)}}
+
+/* TESDA certificate with competencies (opens with a slide) */
+.aleft{min-height:0;min-width:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+.apane.nc .aleft{grid-template-columns:minmax(0,.62fr) minmax(0,1.4fr);gap:calc(var(--s)*1)}
+.acomp{display:flex;flex-direction:column;gap:calc(var(--s)*.4);min-height:0;min-width:0;justify-content:center}
+.acomp[hidden]{display:none}
+.cgh{display:flex;align-items:center;gap:calc(var(--s)*.6);width:100%;text-align:left;padding:calc(var(--s)*.5) calc(var(--s)*.9);border:1px solid var(--line);border-radius:12px;background:rgba(127,127,127,.08);color:var(--fg);cursor:pointer;font:inherit;font-weight:700;font-size:calc(var(--s)*1)}
+.cgh .gt{flex:1;min-width:0}
+.cgh .gu{font-family:var(--mono);font-size:calc(var(--s)*.62);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.cgh i{font-style:normal;font-size:calc(var(--s)*1.3);line-height:1;color:var(--accent);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.cgrp.on>.cgh{border-color:var(--accent)}
+.cgrp.on>.cgh i{transform:rotate(135deg)}
+.cgb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.2,.8,.2,1)}
+.cgrp.on>.cgb{grid-template-rows:1fr}
+.cgb>ul{overflow:hidden;min-height:0;margin:0;padding:0 0 0 calc(var(--s)*.4);list-style:none}
+.cgb li{position:relative;padding:calc(var(--s)*.13) 0 calc(var(--s)*.13) calc(var(--s)*1);font-size:calc(var(--s)*.88);line-height:1.25;opacity:0;transform:translateX(-14px);transition:opacity .25s,transform .25s}
+.cgb li::before{content:"";position:absolute;left:0;top:calc(var(--s)*.58);width:calc(var(--s)*.38);height:calc(var(--s)*.38);border-radius:50%;background:var(--accent)}
+.cgrp.on .cgb li{opacity:1;transform:none;transition:opacity .4s,transform .4s;transition-delay:calc(var(--k)*70ms + .15s)}
+.cgrp.on .cgb ul{padding-top:calc(var(--s)*.35);padding-bottom:calc(var(--s)*.25)}
+@media(prefers-reduced-motion:reduce){.cgb,.cgb li,.cgh i{transition:none!important}}
+@media(max-width:900px){.apane.nc .aleft{grid-template-columns:minmax(0,1fr)}.aleft{grid-template-rows:none}}
+/* sizes tied to screen height so the opened list always fits */
+.acomp{gap:.45vh}
+.cgh{font-size:clamp(14px,2.25vh,26px);padding:.4em .9em;gap:.6em}
+.cgh .gu{font-size:.68em}
+.cgh i{font-size:1.3em}
+.cgb>ul{padding-left:.4em}
+.cgb li{font-size:clamp(12.5px,1.95vh,22px);padding:.13em 0 .13em 1.1em;line-height:1.25}
+.cgb li::before{top:.62em;width:.4em;height:.4em}
+.cgrp.on .cgb ul{padding-top:.3em;padding-bottom:.2em}
+.apane{grid-template-rows:minmax(0,1fr)}
+@media(max-height:740px){.ac{display:none}.athumbs{gap:calc(var(--s)*.3)}}

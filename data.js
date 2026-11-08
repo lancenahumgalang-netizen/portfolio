@@ -62,6 +62,11 @@ window.PORTFOLIO = {
   // Certificates, grouped in three tabs. img = picture file, title = short name, detail = one short line.
   activities: [
     { key: "Curricular", items: [
+      { img: "tesda-nc2.jpg", title: "Computer Systems Servicing NC II", detail: "TESDA · National Certificate II · Issued Feb 20, 2026 · Valid until Feb 19, 2031", groups: [
+        { label: "Core competencies", items: ["Install and configure computer systems", "Set-up computer networks", "Set-up computer servers", "Maintain and repair computer systems and networks"] },
+        { label: "Common competencies", items: ["Apply quality standards", "Perform computer operations", "Perform mensuration and calculation", "Prepare and interpret technical drawing", "Use hand tools", "Terminate and connect electrical wiring and electronic circuits", "Test electronic components"] },
+        { label: "Basic competencies", items: ["Participate in workplace communication", "Work in a team environment", "Practice career professionalism", "Practice occupational health and safety procedures"] }
+      ] },
       { img: "cert-03.jpg", title: "With High Honors", detail: "Grade 12 · SY 2025–2026 · Average 95% · Mar 31, 2026" },
       { img: "cert-07.jpg", title: "With High Honors, 2nd Quarter", detail: "Grade 12 · SY 2025–2026 · Average 95%" },
       { img: "cert-08.jpg", title: "With Honors, 1st Semester", detail: "Grade 12 · SY 2025–2026 · Average 94% · Dec 15, 2025" },

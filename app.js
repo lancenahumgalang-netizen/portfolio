@@ -160,7 +160,14 @@
       }) + '</div>';
       panes = each(acts, function (g, i) {
         return '<div class="apane" role="tabpanel"' + (i ? ' hidden' : '') + '>' +
-          '<button type="button" class="amain" aria-label="Zoom certificate"><img alt=""></button>' +
+          '<div class="aleft"><button type="button" class="amain" aria-label="Zoom certificate"><img alt=""></button>' +
+          each(g.items, function (it, k) {
+            if (!it.groups) { return ''; }
+            return '<div class="acomp" data-k="' + k + '" hidden>' + each(it.groups, function (gr, gi) {
+              return '<div class="cgrp' + (gi === 0 ? ' on' : '') + '"><button type="button" class="cgh" aria-expanded="' + (gi === 0) + '"><span class="gt">' + esc(gr.label) + '</span><span class="gu">' + gr.items.length + ' units</span><i aria-hidden="true">+</i></button>' +
+                '<div class="cgb"><ul>' + each(gr.items, function (t, ti) { return '<li style="--k:' + ti + '">' + esc(t) + '</li>'; }) + '</ul></div></div>';
+            }) + '</div>';
+          }) + '</div>' +
           '<div class="aside"><div class="acap"><div class="at"></div><div class="ad"></div><div class="ac"></div></div>' +
           '<div class="athumbs">' + each(g.items, function (it) {
             return '<button type="button" class="ath" data-img="' + esc(it.img) + '" data-title="' + esc(it.title) + '" data-detail="' + esc(it.detail) + '"><img src="' + esc(it.img) + '" alt="' + esc(it.title) + '" loading="lazy"></button>';
@@ -421,6 +428,8 @@
       var main = p.querySelector('.amain img'), th = [].slice.call(p.querySelectorAll('.ath'));
       function pick(k) {
         th.forEach(function (b, j) { b.classList.toggle('on', j === k); });
+        p.classList.toggle('nc', !!p.querySelector('.acomp[data-k="' + k + '"]'));
+        [].slice.call(p.querySelectorAll('.acomp')).forEach(function (c) { c.hidden = c.getAttribute('data-k') !== String(k); });
         var b = th[k]; main.src = b.getAttribute('data-img'); main.alt = b.getAttribute('data-title');
         p.querySelector('.at').textContent = b.getAttribute('data-title');
         p.querySelector('.ad').textContent = b.getAttribute('data-detail');
@@ -430,6 +439,15 @@
       p.querySelector('.amain').addEventListener('click', function () {
         box.querySelector('img').src = main.src; box.hidden = false; document.documentElement.style.overflow = 'hidden';
         box.querySelector('.lb-close').focus();
+      });
+      [].slice.call(p.querySelectorAll('.cgh')).forEach(function (h) {
+        h.addEventListener('click', function () {
+          var g = h.parentNode, open = !g.classList.contains('on');
+          [].slice.call(g.parentNode.querySelectorAll('.cgrp')).forEach(function (o) {
+            o.classList.remove('on'); o.querySelector('.cgh').setAttribute('aria-expanded', 'false');
+          });
+          if (open) { g.classList.add('on'); h.setAttribute('aria-expanded', 'true'); }
+        });
       });
       if (th.length) { pick(0); }
     });
