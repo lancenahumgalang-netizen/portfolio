@@ -52,10 +52,10 @@ window.PORTFOLIO = {
     heading: "Educational Attainment",
     title: "Educational Attainment",
     list: [
-      { when: "2026 – Present", level: "College", school: "University of the Cordilleras", place: "Baguio City", note: "BSIT · 1st year" },
-      { when: "2024 – 2026", level: "Senior High School", school: "Benguet National High School", place: "Wangal, La Trinidad, Benguet", note: "TVL – ICT" },
+      { when: "2026 – Present", level: "College", school: "University of the Cordilleras", place: "Governor Pack Road, Baguio City", note: "BSIT · 1st year" },
+      { when: "2024 – 2026", level: "Senior High School", school: "Benguet National High School", place: "Wangal, La Trinidad, Benguet", note: "TVL – ICT", extra: "Section 12 TVL-J · Graduated Mar 31, 2026" },
       { when: "2020 – 2024", level: "Junior High School", school: "Benguet National High School", place: "Wangal, La Trinidad, Benguet", note: "" },
-      { when: "2014 – 2020", level: "Elementary", school: "La Trinidad Nazarene Learners Center", place: "La Trinidad, Benguet", note: "" }
+      { when: "2014 – 2020", level: "Elementary", school: "La Trinidad Nazarene Learners Center", place: "Puguis, La Trinidad, Benguet", note: "" }
     ]
   },
 

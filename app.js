@@ -151,7 +151,9 @@
     if (!ed || !has(ed.list)) { return ''; }
     var line = '<ol class="eduline">' + each(ed.list, function (x) {
       return '<li><div class="lv">' + esc(x.level) + '</div><div class="sc">' + esc(x.school) + '</div>' +
-        '<div class="nt">' + esc(x.when + (x.note ? ' · ' + x.note : '')) + '</div></li>';
+        (x.place ? '<div class="pl">' + esc(x.place) + '</div>' : '') +
+        '<div class="nt">' + esc(x.when + (x.note ? ' · ' + x.note : '')) + '</div>' +
+        (x.extra ? '<div class="nt ex">' + esc(x.extra) + '</div>' : '') + '</li>';
     }) + '</ol>';
     var tabs = '', panes = '';
     if (has(acts)) {
