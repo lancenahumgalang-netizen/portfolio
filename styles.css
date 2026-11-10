@@ -959,3 +959,11 @@ main.wrap>#v-education>.acts{flex:1 1 0;min-height:0;display:flex;flex-direction
 .cgb li{font-size:clamp(12.5px,1.85vh,20px)}
 .cgh{font-size:clamp(14px,2.1vh,24px)}
 @media(max-width:900px){.eduline{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.eduline .lv{white-space:nowrap}
+.eduline .ex{color:var(--fg);font-weight:400;opacity:.75}
+.eduline .hn{color:var(--accent);opacity:1;font-weight:700}
+.eduline{grid-template-columns:minmax(0,1.1fr) minmax(0,1.85fr) minmax(0,1.1fr) minmax(0,1fr)}
+.eduline .lv{font-size:calc(var(--s)*.6);letter-spacing:.05em}
+.eduline .nt{font-size:calc(var(--s)*.8)}
+.eduline .hn{font-size:calc(var(--s)*.85)}
+@media(max-width:900px){.eduline{grid-template-columns:repeat(2,minmax(0,1fr))}.eduline .lv{white-space:normal}}

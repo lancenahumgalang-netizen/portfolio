@@ -150,9 +150,10 @@
     var ed = D.education, acts = D.activities;
     if (!ed || !has(ed.list)) { return ''; }
     var line = '<ol class="eduline">' + each(ed.list, function (x) {
-      return '<li><div class="lv">' + esc(x.level) + '</div><div class="sc">' + esc(x.school) + '</div>' +
+      return '<li><div class="lv">' + esc(x.level + ' · ' + x.when) + '</div><div class="sc">' + esc(x.school) + '</div>' +
         (x.place ? '<div class="pl">' + esc(x.place) + '</div>' : '') +
-        '<div class="nt">' + esc(x.when + (x.note ? ' · ' + x.note : '')) + '</div>' +
+        (x.note ? '<div class="nt">' + esc(x.note) + '</div>' : '') +
+        (x.honors ? '<div class="nt hn">' + esc(x.honors) + '</div>' : '') +
         (x.extra ? '<div class="nt ex">' + esc(x.extra) + '</div>' : '') + '</li>';
     }) + '</ol>';
     var tabs = '', panes = '';
@@ -176,7 +177,7 @@
           }) + '</div></div></div>';
       });
     }
-    return section('education', 'Educational Attainment',
+    return section('education', 'Achievements',
       head('Educational attainment', ed.title || 'Educational Attainment') + line +
       (tabs ? '<div class="acts">' + tabs + panes + '</div>' : ''));
   }
