@@ -1045,3 +1045,83 @@ main.wrap{max-width:min(96vw,2300px);padding-inline:clamp(16px,3vw,64px)}
 @media(prefers-reduced-motion:reduce){#intro{display:none}.apane,.apane *,.pinfo>div,.eduline li,.atabs,.split-txt>*{animation:none!important}}
 @media(max-height:790px){.ath{aspect-ratio:16/9}.athumbs{gap:calc(var(--s)*.3)}}
 #intro b{font-size:clamp(2rem,6.2vw,6.5rem)}
+.eduline{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.05fr) minmax(0,1.05fr);gap:calc(var(--s)*.9)}
+@media(max-width:900px){.eduline{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.eduline{grid-template-columns:minmax(0,1fr) minmax(0,1.55fr) minmax(0,1.2fr) minmax(0,1.1fr) minmax(0,1.15fr);gap:calc(var(--s)*.8)}
+#v-education .head h2{font-size:calc(var(--s)*1.5)}
+.eduline{margin-top:calc(var(--s)*.4)}
+main.wrap>#v-education>.acts{margin-top:calc(var(--s)*.5)}
+@media(max-width:900px){.eduline{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* five schools in one row */
+.eduline{grid-template-columns:minmax(0,1.05fr) minmax(0,1.6fr) minmax(0,1.05fr) minmax(0,1fr) minmax(0,1.05fr);gap:calc(var(--s)*.9)}
+.eduline .sc{font-size:calc(var(--s)*.92)}
+.eduline .pl,.eduline .nt{font-size:calc(var(--s)*.76)}
+.eduline .hn{font-size:calc(var(--s)*.8)}
+.eduline .lv{font-size:calc(var(--s)*.58)}
+@media(max-width:900px){.eduline{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ================= fit engine: one size variable per page, shrinks until nothing scrolls ================= */
+html.nofx *,html.nofx *::before,html.nofx *::after{animation:none!important;transition:none!important}
+#v-about{--base:clamp(15px,min(1.3vw,2.4vh),28px);--s:calc(var(--base)*var(--fit,1))}
+#v-education{--base:clamp(16px,min(1.45vw,2.7vh),30px);--s:calc(var(--base)*var(--fit,1))}
+@media(max-height:700px){#v-education{--base:clamp(15px,min(1.4vw,2.5vh),30px)}}
+@media(max-width:900px){#v-about{--base:15px}#v-education{--base:16px}}
+/* competencies: sized from the page variable, never spill over the tabs */
+.acomp{justify-content:flex-start;overflow:hidden;gap:calc(var(--s)*.4)}
+.cgh{font-size:calc(var(--s)*.88);padding:.4em .9em}
+.cgb li{font-size:calc(var(--s)*.76);padding:.13em 0 .13em 1.1em}
+.apane{overflow:hidden}
+.aside{overflow:hidden}
+
+/* ---------- phones: one tidy column, still no scrolling ---------- */
+@media(max-width:900px){
+  #v-education{--base:15px}
+  #v-education .head h2{font-size:calc(var(--s)*1.55)}
+  .eduline{grid-template-columns:minmax(0,1fr);gap:calc(var(--s)*.3);margin-top:calc(var(--s)*.4)}
+  .eduline li{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:.6em;border-top:1px solid var(--line);padding-top:calc(var(--s)*.22);animation:none}
+  .eduline li:first-child{border-top:2px solid var(--accent)}
+  .eduline .sc{order:1;flex:1 1 100%;font-size:calc(var(--s)*.98);margin:0}
+  .eduline .lv{order:2;font-size:calc(var(--s)*.62)}
+  .eduline .pl{order:3;font-size:calc(var(--s)*.72);margin:0}
+  .eduline .nt{order:4;font-size:calc(var(--s)*.72);margin:0}
+  .eduline .hn{order:5;font-size:calc(var(--s)*.74)}
+  main.wrap>#v-education>.acts{flex:1 1 0;min-height:0;margin-top:calc(var(--s)*.5)}
+  .atabs{gap:calc(var(--s)*.35);margin-bottom:calc(var(--s)*.4)}
+  .atab{font-size:calc(var(--s)*.62);padding:calc(var(--s)*.35) calc(var(--s)*.7);letter-spacing:.03em}
+  .apane{display:flex;flex-direction:column;gap:calc(var(--s)*.5)}
+  .aleft{flex:1 1 0;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+  .amain{height:auto;min-height:0;flex:none}
+  .apane.nc .aleft{grid-template-columns:minmax(0,.62fr) minmax(0,1.5fr);gap:calc(var(--s)*.5)}
+  .aside{flex:none;gap:calc(var(--s)*.4)}
+  .at{font-size:calc(var(--s)*1)}
+  .ad{font-size:calc(var(--s)*.72);margin:0}
+  .ac{display:none}
+  .athumbs{grid-template-columns:repeat(7,minmax(0,1fr));gap:calc(var(--s)*.25)}
+  .ath{aspect-ratio:1}
+  .cgh{font-size:calc(var(--s)*.8)}
+  .cgb li{font-size:calc(var(--s)*.7)}
+  /* personal information: label left, value right */
+  #v-about .pinfo{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-flow:row;margin-top:calc(var(--s)*.5)}
+  #v-about .pinfo>div{display:grid;grid-template-columns:30% minmax(0,1fr);column-gap:.6em;align-items:baseline;padding-block:calc(var(--s)*.3)}
+  #v-about .pinfo>div::before{top:calc(var(--s)*.75)}
+  #v-about .pinfo dt{margin:0;font-size:calc(var(--s)*.55)}
+  #v-about .pinfo dd{font-size:calc(var(--s)*.88)}
+}
+
+/* content-driven heights: if text cannot fit, the page reports it and the fit engine shrinks the text */
+.ns{display:none}
+main.wrap>#v-education>.acts{min-height:min-content}
+.apane{grid-template-rows:minmax(min-content,1fr);min-height:min-content}
+.aleft{grid-template-rows:minmax(min-content,1fr);min-height:min-content}
+.aside{min-height:min-content}
+.amain{min-height:calc(var(--s)*7)}
+@media(max-width:700px){
+  .nf{display:none}.ns{display:inline}
+  .links a{font-size:10.5px;letter-spacing:.04em;padding:7px 9px}
+  .pill{padding-left:8px}
+  .aleft{flex:1 1 0;min-height:min-content;grid-template-rows:minmax(min-content,1fr)}
+  .apane{min-height:min-content}
+}
+#v-home{overflow:hidden}
+.split-pic{padding:14px}
+main.wrap>.view{overflow:hidden}
