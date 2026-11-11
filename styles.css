@@ -967,3 +967,81 @@ main.wrap>#v-education>.acts{flex:1 1 0;min-height:0;display:flex;flex-direction
 .eduline .nt{font-size:calc(var(--s)*.8)}
 .eduline .hn{font-size:calc(var(--s)*.85)}
 @media(max-width:900px){.eduline{grid-template-columns:repeat(2,minmax(0,1fr))}.eduline .lv{white-space:normal}}
+
+/* ================= maximize on big screens + transitions ================= */
+html{font-size:clamp(16px,min(1.25vw,2.2vh),30px)}
+main.wrap{max-width:min(96vw,2300px);padding-inline:clamp(16px,3vw,64px)}
+#app>nav{max-width:min(92vw,1100px)}
+.split-pic .portrait.photo{width:min(100%,64vh,34vw)}
+.split{gap:clamp(20px,5vw,110px)}
+
+/* education row: level and years wrap instead of colliding */
+.eduline li{min-width:0;overflow-wrap:anywhere}
+.eduline .lv{display:flex;flex-wrap:wrap;column-gap:.9em;white-space:normal;overflow-wrap:normal;line-height:1.3}
+.eduline .lv span{white-space:nowrap}
+.eduline .nt,.eduline .pl,.eduline .sc{overflow-wrap:break-word}
+
+/* opening card */
+#intro{position:fixed;inset:0;z-index:200;background:var(--bg);display:grid;place-items:center;pointer-events:none;text-align:left;animation:introOut .65s .95s cubic-bezier(.7,0,.2,1) forwards}
+#intro div{display:grid;gap:.5em;justify-items:start;max-width:92vw}
+#intro b{font-family:var(--display);font-stretch:70%;font-weight:900;text-transform:uppercase;font-size:clamp(2.2rem,7.5vw,7rem);line-height:.95;letter-spacing:-.01em;animation:introIn .8s cubic-bezier(.2,.8,.2,1) both}
+#intro i{display:block;height:5px;width:100%;background:var(--accent);transform-origin:left;animation:introBar .9s .15s cubic-bezier(.2,.8,.2,1) both}
+#intro small{font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-size:clamp(.7rem,1.2vw,1rem);animation:introIn .8s .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes introIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes introBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes introOut{to{transform:translateY(-100%)}}
+
+/* page content rises in (slower start while the opening card leaves) */
+@keyframes pgRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes pgPop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+.split-pic .portrait.photo{animation:pgPop .8s .1s cubic-bezier(.2,.8,.2,1) backwards}
+.split-txt>*{animation:pgRise .7s cubic-bezier(.2,.8,.2,1) both}
+.split-txt>*:nth-child(1){animation-delay:.1s}.split-txt>*:nth-child(2){animation-delay:.18s}.split-txt>*:nth-child(3){animation-delay:.26s}
+.split-txt>*:nth-child(4){animation-delay:.34s}.split-txt>*:nth-child(5){animation-delay:.42s}.split-txt>*:nth-child(6){animation-delay:.5s}
+.split-txt>*:nth-child(7){animation-delay:.58s}.split-txt>*:nth-child(8){animation-delay:.66s}
+.booting .split-pic .portrait.photo{animation-delay:1.05s}
+.booting .split-txt>*{animation-delay:calc(1.05s + var(--bn,0)*0s)}
+.booting .split-txt>*:nth-child(2){animation-delay:1.13s}.booting .split-txt>*:nth-child(3){animation-delay:1.21s}
+.booting .split-txt>*:nth-child(4){animation-delay:1.29s}.booting .split-txt>*:nth-child(5){animation-delay:1.37s}
+.booting .split-txt>*:nth-child(6){animation-delay:1.45s}.booting .split-txt>*:nth-child(7){animation-delay:1.53s}
+.booting .split-txt>*:nth-child(8){animation-delay:1.61s}
+.booting #bigNext,.booting .bigwrap{animation:pgRise .7s 1.5s cubic-bezier(.2,.8,.2,1) both}
+.pinfo>div{animation:pgRise .55s cubic-bezier(.2,.8,.2,1) both}
+.eduline li{animation:pgRise .6s cubic-bezier(.2,.8,.2,1) both}
+.eduline li:nth-child(2){animation-delay:.07s}.eduline li:nth-child(3){animation-delay:.14s}.eduline li:nth-child(4){animation-delay:.21s}
+.atabs{animation:pgRise .6s .2s cubic-bezier(.2,.8,.2,1) both}
+.pinfo>div:nth-child(1){animation-delay:0.04s}
+.pinfo>div:nth-child(2){animation-delay:0.08s}
+.pinfo>div:nth-child(3){animation-delay:0.12s}
+.pinfo>div:nth-child(4){animation-delay:0.16s}
+.pinfo>div:nth-child(5){animation-delay:0.2s}
+.pinfo>div:nth-child(6){animation-delay:0.24s}
+.pinfo>div:nth-child(7){animation-delay:0.28s}
+.pinfo>div:nth-child(8){animation-delay:0.32s}
+.pinfo>div:nth-child(9){animation-delay:0.36s}
+.pinfo>div:nth-child(10){animation-delay:0.4s}
+.pinfo>div:nth-child(11){animation-delay:0.44s}
+.pinfo>div:nth-child(12){animation-delay:0.48s}
+.pinfo>div:nth-child(13){animation-delay:0.52s}
+.pinfo>div:nth-child(14){animation-delay:0.56s}
+
+/* curricular / co-curricular / extra-curricular: slide + fade when switching */
+.atab{transition:background .4s,color .4s,border-color .4s,transform .25s}
+.atab:hover{transform:translateY(-2px)}
+.atab:active{transform:scale(.96)}
+@keyframes paneIn{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
+@keyframes cardIn{from{opacity:0;transform:scale(.94) translateY(16px)}to{opacity:1;transform:none}}
+@keyframes thIn{from{opacity:0;transform:translateY(18px) scale(.9)}to{opacity:.75;transform:none}}
+@keyframes swapIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+@keyframes capIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.apane{animation:paneIn .6s cubic-bezier(.2,.8,.2,1) both}
+.apane:not([hidden]) .amain{animation:cardIn .7s .05s cubic-bezier(.2,.8,.2,1) both}
+.apane .ath{animation:thIn .55s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0)*70ms + .2s)}
+.apane .ath.on{animation-name:thInOn}
+@keyframes thInOn{from{opacity:0;transform:translateY(18px) scale(.9)}to{opacity:1;transform:none}}
+.amain img.swap{animation:swapIn .5s cubic-bezier(.2,.8,.2,1) both}
+.acap.swap{animation:capIn .5s cubic-bezier(.2,.8,.2,1) both}
+.acomp{animation:capIn .6s .1s cubic-bezier(.2,.8,.2,1) both}
+@media(prefers-reduced-motion:reduce){#intro{display:none}.apane,.apane *,.pinfo>div,.eduline li,.atabs,.split-txt>*{animation:none!important}}
+@media(max-height:790px){.ath{aspect-ratio:16/9}.athumbs{gap:calc(var(--s)*.3)}}
+#intro b{font-size:clamp(2rem,6.2vw,6.5rem)}

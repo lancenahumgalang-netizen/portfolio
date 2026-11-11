@@ -55,7 +55,8 @@ window.PORTFOLIO = {
       { when: "2026 – Present", level: "College", school: "University of the Cordilleras", place: "Governor Pack Road, Baguio City", note: "BSIT · 1st year" },
       { when: "2024 – 2026", level: "Senior High School", school: "Benguet National High School", place: "Wangal, La Trinidad, Benguet", note: "TVL – ICT · Sec. 12 TVL-J · Graduated Mar 31, 2026", honors: "With High Honors · 95% average" },
       { when: "2020 – 2024", level: "Junior High School", school: "Benguet National High School", place: "Wangal, La Trinidad, Benguet", note: "", honors: "With Honors · SY 2023–2024" },
-      { when: "2014 – 2020", level: "Elementary", school: "La Trinidad Nazarene Learners Center", place: "Puguis, La Trinidad, Benguet", note: "" }
+      { when: "2014 – 2020", level: "Elementary", school: "La Trinidad Nazarene Learners Center", place: "Puguis, La Trinidad, Benguet", note: "" },
+      { when: "2014", level: "Kindergarten", school: "Baguio City Foursquare Heritage School", place: "392 Tacay Road, Pinsao Proper, Baguio City", note: "Graduated 2014" }
     ]
   },
 

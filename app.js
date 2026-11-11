@@ -150,7 +150,7 @@
     var ed = D.education, acts = D.activities;
     if (!ed || !has(ed.list)) { return ''; }
     var line = '<ol class="eduline">' + each(ed.list, function (x) {
-      return '<li><div class="lv">' + esc(x.level + ' · ' + x.when) + '</div><div class="sc">' + esc(x.school) + '</div>' +
+      return '<li><div class="lv"><span>' + esc(x.level) + '</span><span class="yr">' + esc(x.when) + '</span></div><div class="sc">' + esc(x.school) + '</div>' +
         (x.place ? '<div class="pl">' + esc(x.place) + '</div>' : '') +
         (x.note ? '<div class="nt">' + esc(x.note) + '</div>' : '') +
         (x.honors ? '<div class="nt hn">' + esc(x.honors) + '</div>' : '') +
@@ -429,6 +429,8 @@
     });
     panes.forEach(function (p) {
       var main = p.querySelector('.amain img'), th = [].slice.call(p.querySelectorAll('.ath'));
+      th.forEach(function (b, j) { b.style.setProperty('--i', j); });
+      function replay(el) { if (!el) { return; } el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }
       function pick(k) {
         th.forEach(function (b, j) { b.classList.toggle('on', j === k); });
         p.classList.toggle('nc', !!p.querySelector('.acomp[data-k="' + k + '"]'));
@@ -436,6 +438,7 @@
         var b = th[k]; main.src = b.getAttribute('data-img'); main.alt = b.getAttribute('data-title');
         p.querySelector('.at').textContent = b.getAttribute('data-title');
         p.querySelector('.ad').textContent = b.getAttribute('data-detail');
+        replay(main); replay(p.querySelector('.acap'));
         p.querySelector('.ac').textContent = (k + 1) + ' of ' + th.length + ' · click the picture to zoom';
       }
       th.forEach(function (b, k) { b.addEventListener('click', function () { pick(k); }); });
@@ -531,4 +534,21 @@
 
   // open the page named in the link, or the home page
   go(keyFromHash());
+})();
+
+/* opening transition: name card slides away, then the page rises in */
+(function () {
+  try {
+    var root = document.documentElement;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+    root.classList.add('booting');
+    var el = document.createElement('div'); el.id = 'intro';
+    var P = window.PORTFOLIO || {}, n = P.name || {};
+    var full = [n.first, n.middle, n.last].filter(Boolean).join(' ') || 'Portfolio';
+    el.innerHTML = '<div><b></b><i></i><small>Portfolio ' + new Date().getFullYear() + '</small></div>';
+    el.querySelector('b').textContent = full;
+    document.body.appendChild(el);
+    setTimeout(function () { if (el.parentNode) { el.parentNode.removeChild(el); } }, 1700);
+    setTimeout(function () { root.classList.remove('booting'); }, 2600);
+  } catch (e) {}
 })();
