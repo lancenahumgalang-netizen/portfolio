@@ -149,12 +149,13 @@
   function education() {
     var ed = D.education, acts = D.activities;
     if (!ed || !has(ed.list)) { return ''; }
-    var line = '<ol class="eduline">' + each(ed.list, function (x) {
+    var line = '<ol class="eduline">' + each(ed.list, function (x, xi) {
       return '<li><div class="lv"><span>' + esc(x.level) + '</span><span class="yr">' + esc(x.when) + '</span></div><div class="sc">' + esc(x.school) + '</div>' +
         (x.place ? '<div class="pl">' + esc(x.place) + '</div>' : '') +
         (x.note ? '<div class="nt">' + esc(x.note) + '</div>' : '') +
         (x.honors ? '<div class="nt hn">' + esc(x.honors) + '</div>' : '') +
-        (x.extra ? '<div class="nt ex">' + esc(x.extra) + '</div>' : '') + '</li>';
+        (x.extra ? '<div class="nt ex">' + esc(x.extra) + '</div>' : '') +
+        (x.album && has(x.album.items) ? '<button type="button" class="alb" data-album="' + xi + '" aria-haspopup="dialog"><span class="alb-i" aria-hidden="true"></span>' + esc(x.album.label || 'Photos') + ' <b>' + x.album.items.length + '</b></button>' : '') + '</li>';
     }) + '</ol>';
     var tabs = '', panes = '';
     if (has(acts)) {
@@ -614,7 +615,7 @@
   function fit(v) {
     if (!v || !v.offsetHeight || busy) { return; }
     busy = true; root.classList.add('nofx');
-    var st = save(v), lo = 0.42, hi = 1.4, best = lo;
+    var st = save(v), lo = 0.3, hi = 1.4, best = lo;
     function setFit(f) {
       v.style.setProperty('--fit', f);
       if (v.id === 'v-home') { [].slice.call(v.querySelectorAll('.split-txt,.split-pic')).forEach(function (e) { e.style.zoom = f; }); }
@@ -644,4 +645,86 @@
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(later); }
   window.addEventListener('load', later);
   later();
+})();
+
+
+/* ---------- graduation album (diploma + photos) ---------- */
+(function () {
+  var D = window.PORTFOLIO || {}, list = (D.education && D.education.list) || [];
+  var root = document.documentElement, al = document.createElement('div');
+  al.className = 'album'; al.hidden = true; al.setAttribute('role', 'dialog'); al.setAttribute('aria-modal', 'true');
+  al.innerHTML =
+    '<div class="al-bar"><i class="al-prog"></i></div>' +
+    '<div class="al-top"><div class="al-h"><span class="al-lv"></span><b class="al-sc"></b></div>' +
+    '<button type="button" class="al-play" aria-pressed="false">&#9654; Slideshow</button>' +
+    '<button type="button" class="al-x" aria-label="Close album">&#10005;</button></div>' +
+    '<div class="al-stage"><button type="button" class="al-nav al-prev" aria-label="Previous photo">&#8249;</button>' +
+    '<figure class="al-fig"><div class="al-frame"><img alt=""></div>' +
+    '<figcaption><span class="al-kind"></span><b class="al-ct"></b><span class="al-cd"></span></figcaption></figure>' +
+    '<button type="button" class="al-nav al-next" aria-label="Next photo">&#8250;</button></div>' +
+    '<div class="al-strip"></div>';
+  document.body.appendChild(al);
+  var img = al.querySelector('.al-frame img'), strip = al.querySelector('.al-strip'), fig = al.querySelector('.al-fig'),
+      prog = al.querySelector('.al-prog'), playBtn = al.querySelector('.al-play'),
+      items = [], cur = 0, timer = null, opener = null;
+  function qs(c) { return al.querySelector(c); }
+  function show(k, dir) {
+    cur = (k + items.length) % items.length;
+    var it = items[cur];
+    fig.classList.remove('go-next', 'go-prev'); void fig.offsetWidth;
+    fig.classList.add(dir < 0 ? 'go-prev' : 'go-next');
+    img.src = it.img; img.alt = it.title;
+    qs('.al-kind').textContent = it.kind || '';
+    qs('.al-ct').textContent = it.title; qs('.al-cd').textContent = it.detail || '';
+    [].slice.call(strip.children).forEach(function (b, j) { b.classList.toggle('on', j === cur); b.setAttribute('aria-current', j === cur ? 'true' : 'false'); });
+    if (timer) { run(); }
+  }
+  function run() {
+    stop(true); playBtn.setAttribute('aria-pressed', 'true'); playBtn.innerHTML = '&#10074;&#10074; Pause';
+    prog.style.animation = 'none'; void prog.offsetWidth; prog.style.animation = 'alProg 4s linear forwards';
+    timer = setTimeout(function () { show(cur + 1, 1); }, 4000);
+  }
+  function stop(keep) {
+    clearTimeout(timer); timer = null; prog.style.animation = 'none';
+    if (!keep) { playBtn.setAttribute('aria-pressed', 'false'); playBtn.innerHTML = '&#9654; Slideshow'; }
+  }
+  function open(i, btn) {
+    var e = list[i]; if (!e || !e.album) { return; }
+    items = e.album.items; opener = btn;
+    qs('.al-lv').textContent = e.level + ' · ' + e.when; qs('.al-sc').textContent = e.school;
+    al.style.setProperty('--n', items.length); al.classList.toggle('one', items.length < 2);
+    strip.innerHTML = items.map(function (it, j) {
+      return '<button type="button" class="al-th" style="--i:' + j + '" aria-label="' + it.title.replace(/"/g, '') + '"><img src="' + it.img + '" alt=""><em>' + (it.kind || '') + '</em></button>';
+    }).join('');
+    [].slice.call(strip.children).forEach(function (b, j) { b.addEventListener('click', function () { show(j, j < cur ? -1 : 1); }); });
+    items.forEach(function (it) { var p = new Image(); p.src = it.img; });
+    al.hidden = false; root.classList.add('album-open'); void al.offsetWidth; al.classList.add('in');
+    show(0, 1); stop(); qs('.al-x').focus();
+  }
+  function close() {
+    if (al.hidden) { return; }
+    stop(); al.classList.remove('in'); al.hidden = true; root.classList.remove('album-open');
+    if (opener) { opener.focus(); }
+  }
+  [].slice.call(document.querySelectorAll('.alb')).forEach(function (b) {
+    b.addEventListener('click', function () { open(+b.getAttribute('data-album'), b); });
+  });
+  qs('.al-x').addEventListener('click', close);
+  qs('.al-prev').addEventListener('click', function () { show(cur - 1, -1); });
+  qs('.al-next').addEventListener('click', function () { show(cur + 1, 1); });
+  playBtn.addEventListener('click', function () { if (timer) { stop(); } else { run(); } });
+  al.addEventListener('click', function (e) { if (e.target === al || e.target.classList.contains('al-stage')) { close(); } });
+  window.addEventListener('keydown', function (e) {
+    if (al.hidden) { return; }
+    if (e.key === 'Escape') { close(); e.stopImmediatePropagation(); e.preventDefault(); }
+    else if (e.key === 'ArrowRight') { show(cur + 1, 1); e.stopImmediatePropagation(); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { show(cur - 1, -1); e.stopImmediatePropagation(); e.preventDefault(); }
+  }, true);
+  var sx = null;
+  al.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+  al.addEventListener('touchend', function (e) {
+    if (sx === null) { return; }
+    var dx = e.changedTouches[0].clientX - sx; sx = null;
+    if (Math.abs(dx) > 45) { show(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); }
+  }, { passive: true });
 })();
