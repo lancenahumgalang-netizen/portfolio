@@ -1342,3 +1342,13 @@ main.wrap>#v-education>.cats{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)
 
 /* intro waits for the fonts so the title never re-flows while it plays */
 html.hold #intro,html.hold #intro *,html.hold.booting *{animation-play-state:paused!important}
+
+/* bigger certificate text: every category in two columns so the lists are at most 4 rows tall */
+@media(min-width:901px){
+  main.wrap>#v-education>.cats{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,.9fr)}
+  .cat.duo .clist{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:column;grid-template-rows:repeat(var(--r,4),auto);column-gap:calc(var(--s)*.6);row-gap:calc(var(--s)*.45)}
+  .cert .cth{width:calc(var(--s)*4.2)}
+  .ctx b{font-size:calc(var(--s)*.98)}
+  .ctx span{font-size:calc(var(--s)*.78);margin-top:2px}
+  .cat-h{font-size:calc(var(--s)*.85)}
+}

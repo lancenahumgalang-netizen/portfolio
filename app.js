@@ -163,7 +163,7 @@
     if (has(acts)) {
       cats = '<div class="cats">' + each(acts, function (g, gi) {
         var n = g.items.length;
-        return '<div class="cat' + (n > 5 ? ' two' : '') + '" role="group" style="--n:' + n + ';--g:' + gi + '" aria-label="' + esc(g.key) + '">' +
+        return '<div class="cat duo' + (n > 5 ? ' two' : '') + '" role="group" style="--n:' + n + ';--r:' + Math.ceil(n / 2) + ';--g:' + gi + '" aria-label="' + esc(g.key) + '">' +
           '<h3 class="cat-h"><span>' + esc(g.key) + '</span><b>' + n + '</b></h3><div class="clist">' +
           each(g.items, function (it, k) {
             var comp = it.groups ? it.groups.map(function (q) { return q.items.length + ' ' + q.label.split(' ')[0].toLowerCase(); }).join(' · ') + ' competencies' : '';
