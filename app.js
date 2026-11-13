@@ -150,7 +150,7 @@
     var ed = D.education, acts = D.activities;
     if (!ed || !has(ed.list)) { return ''; }
     var line = '<ol class="eduline">' + each(ed.list, function (x, xi) {
-      return '<li><div class="lv"><span>' + esc(x.level) + '</span><span class="yr">' + esc(x.when) + '</span></div><div class="sc">' + esc(x.school) + '</div>' +
+      return '<li>' + (x.logo ? '<img class="slogo' + (/uc\./.test(x.logo) ? ' tall' : '') + '" src="' + esc(x.logo) + '" alt="' + esc(x.school) + ' logo" width="64" height="64">' : '') + '<div class="lv"><span>' + esc(x.level) + '</span><span class="yr">' + esc(x.when) + '</span></div><div class="sc">' + esc(x.school) + '</div>' +
         (x.place ? '<div class="pl">' + esc(x.place) + '</div>' : '') +
         (x.note ? '<div class="nt">' + esc(x.note) + '</div>' : '') +
         (x.honors ? '<div class="nt hn">' + esc(x.honors) + '</div>' : '') +

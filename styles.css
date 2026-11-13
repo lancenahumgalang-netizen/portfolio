@@ -1205,3 +1205,21 @@ html.album-open,html.album-open body{overflow:hidden}
 }
 @media(max-width:700px){.al-lv{font-size:11px;letter-spacing:.03em}}
 .album.one .al-nav,.album.one .al-strip,.album.one .al-play{display:none}
+
+/* school logos */
+.eduline li{position:relative}
+.slogo{float:right;height:calc(var(--s)*3.6);width:calc(var(--s)*3.6);margin:calc(var(--s)*.1) 0 calc(var(--s)*.2) calc(var(--s)*.5);object-fit:contain;background:#fff;border-radius:50%;padding:calc(var(--s)*.12);box-shadow:0 2px 8px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.08);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.slogo.tall{width:auto;aspect-ratio:261/443;height:calc(var(--s)*4.2);border-radius:calc(var(--s)*.4);padding:calc(var(--s)*.25)}
+.eduline li:hover .slogo{transform:scale(1.08) rotate(-3deg)}
+@media(max-width:900px){
+  .eduline li{padding-right:calc(var(--s)*3.6 + var(--s)*.6)}
+  .eduline li:has(.tall){padding-right:calc(var(--s)*2.6 + var(--s)*.6)}
+  .slogo{position:absolute;right:0;top:calc(var(--s)*.35);float:none;margin:0;width:calc(var(--s)*3.1);height:calc(var(--s)*3.1)}
+  .slogo.tall{width:auto;height:calc(var(--s)*3.6)}
+}
+@media(max-width:900px) and (max-height:520px) and (orientation:landscape){
+  .eduline li{padding-right:0!important}
+  .slogo{position:static;float:right;width:calc(var(--s)*2);height:calc(var(--s)*2);margin:0 0 2px 4px}
+  .slogo.tall{width:auto;height:calc(var(--s)*2.4)}
+}
+@media(prefers-reduced-motion:reduce){.eduline li:hover .slogo{transform:none}}

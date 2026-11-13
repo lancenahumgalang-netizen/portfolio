@@ -52,8 +52,8 @@ window.PORTFOLIO = {
     heading: "Educational Attainment",
     title: "Educational Attainment",
     list: [
-      { when: "2026 – Present", level: "College", school: "University of the Cordilleras", place: "Governor Pack Road, Baguio City", note: "BSIT · 1st year" },
-      { when: "2024 – 2026", level: "Senior High School", school: "Benguet National High School", place: "Wangal, La Trinidad, Benguet", note: "TVL – ICT · Sec. 12 TVL-J · Graduated Mar 31, 2026", honors: "With High Honors · 95% average",
+      { when: "2026 – Present", level: "College", school: "University of the Cordilleras", logo: "logo-uc.png", place: "Governor Pack Road, Baguio City", note: "BSIT · 1st year" },
+      { when: "2024 – 2026", level: "Senior High School", school: "Benguet National High School", logo: "logo-bnhs.png", place: "Wangal, La Trinidad, Benguet", note: "TVL – ICT · Sec. 12 TVL-J · Graduated Mar 31, 2026", honors: "With High Honors · 95% average",
         album: { label: "Graduation album", items: [
         { img: "shs-diploma.jpg", kind: "Diploma", title: "Senior High School Diploma", detail: "TVL – ICT Strand · Benguet National High School · Mar 31, 2026" },
         { img: "shs-honors-cert.jpg", kind: "Honors", title: "Certificate of Achievement", detail: "Grade 11 · With Honors · 93% average · SY 2024–2025" },
@@ -62,15 +62,15 @@ window.PORTFOLIO = {
         { img: "shs-portrait2.jpg", kind: "Portrait", title: "Graduation Portrait", detail: "Senior High School · Batch 2026" },
         { img: "shs-graduation-day.jpg", kind: "Graduation", title: "Graduation Day", detail: "Benguet National High School · Batch 2026" }
       ] } },
-      { when: "2020 – 2024", level: "Junior High School", school: "Benguet National High School", place: "Wangal, La Trinidad, Benguet", note: "Grade 10-A · SY 2023–2024", honors: "With Honors",
+      { when: "2020 – 2024", level: "Junior High School", school: "Benguet National High School", logo: "logo-bnhs.png", place: "Wangal, La Trinidad, Benguet", note: "Grade 10-A · SY 2023–2024", honors: "With Honors",
         album: { label: "Graduation album", items: [
         { img: "jhs-diploma.jpg", kind: "Diploma", title: "Junior High School Certificate", detail: "Katunayan · Benguet National High School · May 29, 2024" },
         { img: "jhs-portrait.jpg", kind: "Portrait", title: "Graduation Portrait", detail: "Junior High School · Class of 2024" },
         { img: "jhs-moving-up.jpg", kind: "Ceremony", title: "Moving-Up Ceremony", detail: "Benguet National High School · 2024" },
         { img: "jhs-class.jpg", kind: "Class photo", title: "Class Photo", detail: "Grade 10-A · SY 2023–2024" }
       ] } },
-      { when: "2014 – 2020", level: "Elementary", school: "La Trinidad Nazarene Learners Center", place: "Puguis, La Trinidad, Benguet", note: "" },
-      { when: "2013 – 2014", level: "Kindergarten", school: "Baguio City Foursquare Heritage School", place: "Baguio City", note: "Graduated 2014",
+      { when: "2014 – 2020", level: "Elementary", school: "La Trinidad Nazarene Learners Center", logo: "logo-nazarene.png", place: "Puguis, La Trinidad, Benguet", note: "" },
+      { when: "2013 – 2014", level: "Kindergarten", school: "Baguio City Foursquare Heritage School", logo: "logo-kinder.png", place: "Baguio City", note: "Graduated 2014",
         album: { label: "Photo", items: [
           { img: "kinder.jpg", kind: "Kindergarten", title: "Kindergarten Graduation", detail: "Baguio City Foursquare Heritage School · 2014" }
         ] } }
