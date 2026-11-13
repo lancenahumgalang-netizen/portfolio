@@ -157,30 +157,21 @@
         (x.extra ? '<div class="nt ex">' + esc(x.extra) + '</div>' : '') +
         (x.album && has(x.album.items) ? '<button type="button" class="alb" data-album="' + xi + '" aria-haspopup="dialog"><span class="alb-i" aria-hidden="true"></span>' + esc(x.album.label || 'Photos') + ' <b>' + x.album.items.length + '</b></button>' : '') + '</li>';
     }) + '</ol>';
-    var tabs = '', panes = '';
+    var cats = '';
     if (has(acts)) {
-      tabs = '<div class="atabs" role="tablist">' + each(acts, function (g, i) {
-        return '<button type="button" class="atab" role="tab" aria-selected="' + (i === 0) + '">' + esc(g.key) + ' <b>' + g.items.length + '</b></button>';
-      }) + '</div>';
-      panes = each(acts, function (g, i) {
-        return '<div class="apane" role="tabpanel"' + (i ? ' hidden' : '') + '>' +
-          '<div class="aleft"><button type="button" class="amain" aria-label="Zoom certificate"><img alt=""></button>' +
+      cats = '<div class="cats">' + each(acts, function (g, gi) {
+        var n = g.items.length;
+        return '<div class="cat" role="group" style="--n:' + n + ';--c:' + Math.ceil(n / 2) + ';--g:' + gi + '" aria-label="' + esc(g.key) + '">' +
+          '<h3 class="cat-h"><span>' + esc(g.key) + '</span><b>' + n + '</b></h3><div class="cgrid">' +
           each(g.items, function (it, k) {
-            if (!it.groups) { return ''; }
-            return '<div class="acomp" data-k="' + k + '" hidden>' + each(it.groups, function (gr, gi) {
-              return '<div class="cgrp' + (gi === 0 ? ' on' : '') + '"><button type="button" class="cgh" aria-expanded="' + (gi === 0) + '"><span class="gt">' + esc(gr.label) + '</span><span class="gu">' + gr.items.length + ' units</span><i aria-hidden="true">+</i></button>' +
-                '<div class="cgb"><ul>' + each(gr.items, function (t, ti) { return '<li style="--k:' + ti + '">' + esc(t) + '</li>'; }) + '</ul></div></div>';
-            }) + '</div>';
-          }) + '</div>' +
-          '<div class="aside"><div class="acap"><div class="at"></div><div class="ad"></div><div class="ac"></div></div>' +
-          '<div class="athumbs">' + each(g.items, function (it) {
-            return '<button type="button" class="ath" data-img="' + esc(it.img) + '" data-title="' + esc(it.title) + '" data-detail="' + esc(it.detail) + '"><img src="' + esc(it.img) + '" alt="' + esc(it.title) + '" loading="lazy"></button>';
-          }) + '</div></div></div>';
-      });
+            return '<button type="button" class="cth' + (it.groups ? ' hasc' : '') + (/tesda/i.test(it.img) ? ' por' : '') + '" data-g="' + gi + '" data-k="' + k + '" style="--i:' + (gi * 4 + k) + '" title="' + esc(it.title) + '" aria-label="' + esc(g.key + ': ' + it.title) + '">' +
+              '<img src="' + esc(it.img) + '" alt="" loading="lazy">' + (it.groups ? '<span class="cb">Competencies</span>' : '') + '</button>';
+          }) + '</div></div>';
+      }) + '</div>';
     }
     return section('education', 'Achievements',
       head('Educational attainment', ed.title || 'Educational Attainment') + line +
-      (tabs ? '<div class="acts">' + tabs + panes + '</div>' : ''));
+      cats);
   }
 
   /* ---------- build ---------- */
@@ -658,15 +649,24 @@
     '<div class="al-top"><div class="al-h"><span class="al-lv"></span><b class="al-sc"></b></div>' +
     '<button type="button" class="al-play" aria-pressed="false">&#9654; Slideshow</button>' +
     '<button type="button" class="al-x" aria-label="Close album">&#10005;</button></div>' +
-    '<div class="al-stage"><button type="button" class="al-nav al-prev" aria-label="Previous photo">&#8249;</button>' +
-    '<figure class="al-fig"><div class="al-frame"><img alt=""></div>' +
-    '<figcaption><span class="al-kind"></span><b class="al-ct"></b><span class="al-cd"></span></figcaption></figure>' +
-    '<button type="button" class="al-nav al-next" aria-label="Next photo">&#8250;</button></div>' +
+    '<div class="al-stage"><figure class="al-fig"><button type="button" class="al-nav al-prev" aria-label="Previous">&#8249;</button><div class="al-frame"><img alt=""></div>' +
+    '<figcaption><span class="al-kind"></span><b class="al-ct"></b><span class="al-cd"></span></figcaption>' +
+    '<button type="button" class="al-nav al-next" aria-label="Next">&#8250;</button></figure>' +
+    '<aside class="al-comp" aria-label="Competencies"></aside></div>' +
     '<div class="al-strip"></div>';
   document.body.appendChild(al);
   var img = al.querySelector('.al-frame img'), strip = al.querySelector('.al-strip'), fig = al.querySelector('.al-fig'),
       prog = al.querySelector('.al-prog'), playBtn = al.querySelector('.al-play'),
-      items = [], cur = 0, timer = null, opener = null;
+      items = [], cur = 0, timer = null, opener = null, metaCur = {};
+  function e2(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+  function renderComp(it) {
+    var c = qs('.al-comp');
+    if (!it.groups) { al.classList.remove('has-comp'); c.innerHTML = ''; return; }
+    al.classList.add('has-comp');
+    c.innerHTML = it.groups.map(function (g, gi) {
+      return '<div class="ag' + (gi === 0 ? ' on' : '') + '"><button type="button" class="agh" aria-expanded="' + (gi === 0) + '"><span>' + e2(g.label) + '</span><em>' + g.items.length + ' units</em><i aria-hidden="true">+</i></button><div class="agb"><ul>' + g.items.map(function (t, ti) { return '<li style="--k:' + ti + '">' + e2(t) + '</li>'; }).join('') + '</ul></div></div>';
+    }).join('');
+  }
   function qs(c) { return al.querySelector(c); }
   function show(k, dir) {
     cur = (k + items.length) % items.length;
@@ -676,6 +676,8 @@
     img.src = it.img; img.alt = it.title;
     qs('.al-kind').textContent = it.kind || '';
     qs('.al-ct').textContent = it.title; qs('.al-cd').textContent = it.detail || '';
+    renderComp(it);
+    if (metaCur.dyn) { qs('.al-lv').textContent = it.kind; qs('.al-sc').textContent = 'Certificate ' + (cur + 1) + ' of ' + items.length; }
     [].slice.call(strip.children).forEach(function (b, j) { b.classList.toggle('on', j === cur); b.setAttribute('aria-current', j === cur ? 'true' : 'false'); });
     if (timer) { run(); }
   }
@@ -690,16 +692,19 @@
   }
   function open(i, btn) {
     var e = list[i]; if (!e || !e.album) { return; }
-    items = e.album.items; opener = btn;
-    qs('.al-lv').textContent = e.level + ' · ' + e.when; qs('.al-sc').textContent = e.school;
-    al.style.setProperty('--n', items.length); al.classList.toggle('one', items.length < 2);
+    openWith({ lv: e.level + ' · ' + e.when, sc: e.school }, e.album.items, 0, btn);
+  }
+  function openWith(meta, its, start, btn) {
+    items = its; opener = btn; metaCur = meta;
+    qs('.al-lv').textContent = meta.lv; qs('.al-sc').textContent = meta.sc;
+    al.style.setProperty('--n', items.length); al.classList.toggle('one', items.length < 2); al.classList.toggle('many', items.length > 8);
     strip.innerHTML = items.map(function (it, j) {
-      return '<button type="button" class="al-th" style="--i:' + j + '" aria-label="' + it.title.replace(/"/g, '') + '"><img src="' + it.img + '" alt=""><em>' + (it.kind || '') + '</em></button>';
+      return '<button type="button" class="al-th" style="--i:' + j + '" aria-label="' + e2(it.title) + '"><img src="' + it.img + '" alt=""><em>' + (it.kind || '') + '</em></button>';
     }).join('');
     [].slice.call(strip.children).forEach(function (b, j) { b.addEventListener('click', function () { show(j, j < cur ? -1 : 1); }); });
     items.forEach(function (it) { var p = new Image(); p.src = it.img; });
     al.hidden = false; root.classList.add('album-open'); void al.offsetWidth; al.classList.add('in');
-    show(0, 1); stop(); qs('.al-x').focus();
+    show(start, 1); stop(); qs('.al-x').focus();
   }
   function close() {
     if (al.hidden) { return; }
@@ -708,6 +713,21 @@
   }
   [].slice.call(document.querySelectorAll('.alb')).forEach(function (b) {
     b.addEventListener('click', function () { open(+b.getAttribute('data-album'), b); });
+  });
+  qs('.al-comp').addEventListener('click', function (e) {
+    var h = e.target.closest ? e.target.closest('.agh') : null; if (!h) { return; }
+    var g = h.parentNode, was = g.classList.contains('on');
+    [].slice.call(g.parentNode.children).forEach(function (o) { o.classList.remove('on'); o.firstChild.setAttribute('aria-expanded', 'false'); });
+    if (!was) { g.classList.add('on'); h.setAttribute('aria-expanded', 'true'); }
+  });
+  var flat = [];
+  (D.activities || []).forEach(function (g) { g.items.forEach(function (it) { flat.push({ img: it.img, title: it.title, detail: it.detail, kind: g.key, groups: it.groups }); }); });
+  [].slice.call(document.querySelectorAll('.cth')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      var gi = +b.getAttribute('data-g'), k = +b.getAttribute('data-k'), idx = k;
+      for (var q = 0; q < gi; q++) { idx += D.activities[q].items.length; }
+      openWith({ dyn: true, lv: '', sc: '' }, flat, idx, b);
+    });
   });
   qs('.al-x').addEventListener('click', close);
   qs('.al-prev').addEventListener('click', function () { show(cur - 1, -1); });
