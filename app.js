@@ -155,17 +155,21 @@
         (x.note ? '<div class="nt">' + esc(x.note) + '</div>' : '') +
         (x.honors ? '<div class="nt hn">' + esc(x.honors) + '</div>' : '') +
         (x.extra ? '<div class="nt ex">' + esc(x.extra) + '</div>' : '') +
-        (x.album && has(x.album.items) ? '<button type="button" class="alb" data-album="' + xi + '" aria-haspopup="dialog"><span class="alb-i" aria-hidden="true"></span>' + esc(x.album.label || 'Photos') + ' <b>' + x.album.items.length + '</b></button>' : '') + '</li>';
+        (x.album && has(x.album.items) ? '<div class="ealb"><div class="ealb-h"><span class="alb-i" aria-hidden="true"></span>' + esc(x.album.label || 'Photos') + ' <b>' + x.album.items.length + '</b></div><div class="ealb-g">' + each(x.album.items, function (p, pk) {
+          return '<button type="button" class="eph" data-album="' + xi + '" data-pk="' + pk + '" title="' + esc(p.title) + '" aria-label="' + esc(p.title) + '"><img src="' + esc(p.img) + '" alt="" loading="lazy"><em>' + esc(p.kind || '') + '</em></button>';
+        }) + '</div></div>' : '') + '</li>';
     }) + '</ol>';
     var cats = '';
     if (has(acts)) {
       cats = '<div class="cats">' + each(acts, function (g, gi) {
         var n = g.items.length;
-        return '<div class="cat" role="group" style="--n:' + n + ';--c:' + Math.ceil(n / 2) + ';--g:' + gi + '" aria-label="' + esc(g.key) + '">' +
-          '<h3 class="cat-h"><span>' + esc(g.key) + '</span><b>' + n + '</b></h3><div class="cgrid">' +
+        return '<div class="cat' + (n > 5 ? ' two' : '') + '" role="group" style="--n:' + n + ';--g:' + gi + '" aria-label="' + esc(g.key) + '">' +
+          '<h3 class="cat-h"><span>' + esc(g.key) + '</span><b>' + n + '</b></h3><div class="clist">' +
           each(g.items, function (it, k) {
-            return '<button type="button" class="cth' + (it.groups ? ' hasc' : '') + (/tesda/i.test(it.img) ? ' por' : '') + '" data-g="' + gi + '" data-k="' + k + '" style="--i:' + (gi * 4 + k) + '" title="' + esc(it.title) + '" aria-label="' + esc(g.key + ': ' + it.title) + '">' +
-              '<img src="' + esc(it.img) + '" alt="" loading="lazy">' + (it.groups ? '<span class="cb">Competencies</span>' : '') + '</button>';
+            var comp = it.groups ? it.groups.map(function (q) { return q.items.length + ' ' + q.label.split(' ')[0].toLowerCase(); }).join(' · ') + ' competencies' : '';
+            return '<div class="cert" style="--i:' + (gi * 4 + k) + '"><button type="button" class="cth' + (it.groups ? ' hasc' : '') + (/tesda/i.test(it.img) ? ' por' : '') + '" data-g="' + gi + '" data-k="' + k + '" title="' + esc(it.title) + '" aria-label="' + esc(g.key + ': ' + it.title) + '">' +
+              '<img src="' + esc(it.img) + '" alt="" loading="lazy"></button>' +
+              '<div class="ctx"><b>' + esc(it.title) + '</b><span>' + esc(it.detail || '') + '</span>' + (comp ? '<span class="cp">' + esc(comp) + '</span>' : '') + '</div></div>';
           }) + '</div></div>';
       }) + '</div>';
     }
@@ -713,6 +717,12 @@
   }
   [].slice.call(document.querySelectorAll('.alb')).forEach(function (b) {
     b.addEventListener('click', function () { open(+b.getAttribute('data-album'), b); });
+  });
+  [].slice.call(document.querySelectorAll('.eph')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      var e = list[+b.getAttribute('data-album')]; if (!e || !e.album) { return; }
+      openWith({ lv: e.level + ' · ' + e.when, sc: e.school }, e.album.items, +b.getAttribute('data-pk'), b);
+    });
   });
   qs('.al-comp').addEventListener('click', function (e) {
     var h = e.target.closest ? e.target.closest('.agh') : null; if (!h) { return; }
