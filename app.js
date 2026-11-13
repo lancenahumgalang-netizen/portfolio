@@ -537,15 +537,24 @@
   try {
     var root = document.documentElement;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
-    root.classList.add('booting');
+    root.classList.add('booting', 'hold');
     var el = document.createElement('div'); el.id = 'intro';
     var P = window.PORTFOLIO || {}, n = P.name || {};
     var full = [n.first, n.middle, n.last].filter(Boolean).join(' ') || 'Portfolio';
     el.innerHTML = '<div><b></b><i></i><small>Portfolio ' + new Date().getFullYear() + '</small></div>';
     el.querySelector('b').textContent = full;
     document.body.appendChild(el);
-    setTimeout(function () { if (el.parentNode) { el.parentNode.removeChild(el); } }, 1700);
-    setTimeout(function () { root.classList.remove('booting'); }, 2600);
+    var started = false;
+    function go() {
+      if (started) { return; } started = true;
+      root.classList.remove('hold');
+      setTimeout(function () { if (el.parentNode) { el.parentNode.removeChild(el); } }, 1700);
+      setTimeout(function () { root.classList.remove('booting'); }, 2600);
+    }
+    setTimeout(go, 1200);
+    if (document.fonts && document.fonts.load) {
+      Promise.all([document.fonts.load('900 1em Archivo'), document.fonts.load('600 1em "Hanken Grotesk"'), document.fonts.load('500 1em "JetBrains Mono"')]).then(go, go);
+    } else { go(); }
   } catch (e) {}
 })();
 

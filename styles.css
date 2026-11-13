@@ -1061,7 +1061,8 @@ main.wrap>#v-education>.acts{margin-top:calc(var(--s)*.5)}
 @media(max-width:900px){.eduline{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* ================= fit engine: one size variable per page, shrinks until nothing scrolls ================= */
-html.nofx *,html.nofx *::before,html.nofx *::after{animation:none!important;transition:none!important}
+/* measuring: jump animations to their end state WITHOUT cancelling them (cancelling restarted the intro and replayed entrances = the jitter) */
+html.nofx *:not(#intro):not(#intro *),html.nofx *:not(#intro):not(#intro *)::before,html.nofx *:not(#intro):not(#intro *)::after{animation-duration:.001ms!important;animation-delay:0s!important;transition:none!important}
 #v-about{--base:clamp(15px,min(1.3vw,2.4vh),28px);--s:calc(var(--base)*var(--fit,1))}
 #v-education{--base:clamp(16px,min(1.45vw,2.7vh),30px);--s:calc(var(--base)*var(--fit,1))}
 @media(max-height:700px){#v-education{--base:clamp(15px,min(1.4vw,2.5vh),30px)}}
@@ -1338,3 +1339,6 @@ main.wrap>#v-education>.cats{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)
   .ealb-g{grid-template-columns:repeat(auto-fill,minmax(0,calc(var(--s)*2.6)))}
   .eph em{display:none}
 }
+
+/* intro waits for the fonts so the title never re-flows while it plays */
+html.hold #intro,html.hold #intro *,html.hold.booting *{animation-play-state:paused!important}
