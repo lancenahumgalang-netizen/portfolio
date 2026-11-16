@@ -146,6 +146,26 @@
       '<dl class="pinfo">' + facts + '</dl>');
   }
 
+
+  var famPhoto = 0;
+  function family() {
+    var f = D.family; if (!f) { return ''; }
+    var groups = f.groups || [];
+    var inner = each(groups, function (g, gi) {
+      var real = has(g.people), list = real ? g.people : [{}, {}, {}];
+      return '<div class="fgrp" style="--g:' + gi + '" role="group" aria-label="' + esc(g.key) + '"><h3 class="cat-h"><span>' + esc(g.key) + '</span>' + (real ? '<b>' + list.length + '</b>' : '') + '</h3><div class="pgrid">' +
+        each(list, function (p, k) {
+          var av = p.photo
+            ? '<button type="button" class="pav" data-f="' + (famPhoto++) + '" aria-label="View photo of ' + esc(p.name || 'person') + '"><img src="' + esc(p.photo) + '" alt="" loading="lazy"></button>'
+            : '<div class="pav ph" aria-hidden="true">' + tileDraw(k + gi) + '</div>';
+          return '<div class="pcard' + (real ? '' : ' ph') + '" style="--i:' + (gi * 6 + k) + '">' + av +
+            '<div class="ptx"><b>' + esc(p.name || 'Name') + '</b><span class="rel">' + esc(p.relation || 'Relationship') + '</span>' +
+            (p.note ? '<span class="nt">' + esc(p.note) + '</span>' : '') + '</div></div>';
+        }) + '</div></div>';
+    });
+    return section('family', 'Family and Friends', head('Family and Friends', f.heading || 'Family and Friends') + '<div class="fam">' + inner + '</div>');
+  }
+
   function education() {
     var ed = D.education, acts = D.activities;
     if (!ed || !has(ed.list)) { return ''; }
@@ -179,7 +199,7 @@
   }
 
   /* ---------- build ---------- */
-  var body = home() + about() + education();
+  var body = home() + about() + education() + family();
   var full = D.name.first + ' ' + D.name.middle + ' ' + D.name.last;
 
   var menu = '<nav aria-label="Pages"><div class="pill">' +
@@ -291,7 +311,7 @@
   }
 
   // content of each page fades in one piece after another
-  var STAG = '.head, .about .copy, .facts, .stats .stat, .polaroid, .thanks, .focus > div, .edublock, .skillsblock, .rows li, .train, .imm-info, .imm-photos, .svc, .slide, .list .row, .bc, .contact > div, .closing, .split-txt > *, .split-pic';
+  var STAG = '.head, .fgrp, .about .copy, .facts, .stats .stat, .polaroid, .thanks, .focus > div, .edublock, .skillsblock, .rows li, .train, .imm-info, .imm-photos, .svc, .slide, .list .row, .bc, .contact > div, .closing, .split-txt > *, .split-pic';
   views.forEach(function (v) {
     var n = 0;
     [].slice.call(v.querySelectorAll(STAG)).forEach(function (el) {
@@ -690,7 +710,7 @@
     qs('.al-kind').textContent = it.kind || '';
     qs('.al-ct').textContent = it.title; qs('.al-cd').textContent = it.detail || '';
     renderComp(it);
-    if (metaCur.dyn) { qs('.al-lv').textContent = it.kind; qs('.al-sc').textContent = 'Certificate ' + (cur + 1) + ' of ' + items.length; }
+    if (metaCur.dyn) { qs('.al-lv').textContent = it.kind; qs('.al-sc').textContent = (metaCur.noun || 'Certificate') + ' ' + (cur + 1) + ' of ' + items.length; }
     [].slice.call(strip.children).forEach(function (b, j) { b.classList.toggle('on', j === cur); b.setAttribute('aria-current', j === cur ? 'true' : 'false'); });
     if (timer) { run(); }
   }
@@ -747,6 +767,11 @@
       for (var q = 0; q < gi; q++) { idx += D.activities[q].items.length; }
       openWith({ dyn: true, lv: '', sc: '' }, flat, idx, b);
     });
+  });
+  var famItems = [];
+  ((D.family && D.family.groups) || []).forEach(function (g) { (g.people || []).forEach(function (p) { if (p.photo) { famItems.push({ img: p.photo, title: p.name || '', detail: [p.relation, p.note].filter(Boolean).join(' · '), kind: g.key }); } }); });
+  [].slice.call(document.querySelectorAll('.pav[data-f]')).forEach(function (b) {
+    b.addEventListener('click', function () { openWith({ dyn: true, noun: 'Photo', lv: '', sc: '' }, famItems, +b.getAttribute('data-f'), b); });
   });
   qs('.al-x').addEventListener('click', close);
   qs('.al-prev').addEventListener('click', function () { show(cur - 1, -1); });

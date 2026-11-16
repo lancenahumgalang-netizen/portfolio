@@ -22,6 +22,21 @@ window.PORTFOLIO = {
     photo: "me.jpg"         // your profile picture
   },
 
+  // ---- PAGE 4: FAMILY AND FRIENDS ----
+  // Add one line per person. "photo" is a picture file in the same folder (leave it out to show a placeholder).
+  // While a list is empty ( [] ), three empty placeholder cards are shown so you can see the layout.
+  family: {
+    heading: "Family and Friends",
+    groups: [
+      { key: "Family", people: [
+        // { name: "Name", relation: "Mother", photo: "family-1.jpg", note: "short line (optional)" },
+      ] },
+      { key: "Friends", people: [
+        // { name: "Name", relation: "Classmate", photo: "friend-1.jpg", note: "short line (optional)" },
+      ] }
+    ]
+  },
+
   about: {
     heading: "Personal Information",
     // One short line each. {age} is worked out automatically from the birthday below.
