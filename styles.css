@@ -1475,3 +1475,10 @@ main.wrap>#v-family>.fam.pics.one{grid-template-columns:minmax(0,1fr)}
 .fam.pics .ptx .rel{font-size:calc(var(--s)*.9);color:var(--accent);font-weight:700;margin:0}
 .fam.pics .ptx .nt{display:block;font-size:calc(var(--s)*.85);color:var(--fg);text-align:center;margin:0;font-weight:600}
 @media(max-width:600px){.fam.pics .ptx b{font-size:calc(var(--s)*.95)}.fam.pics .ptx .rel,.fam.pics .ptx .nt{font-size:calc(var(--s)*.8)}}
+
+.fam.pics .ptx .th{display:block;margin-top:calc(var(--s)*.3);padding-top:calc(var(--s)*.3);border-top:1px solid var(--line);font-size:calc(var(--s)*.8);line-height:1.25;font-style:italic;color:var(--fg);text-align:center;text-wrap:balance}
+@media(max-width:600px){
+  .fam.pics .pav,.fam.pics.one .pav{aspect-ratio:16/10}
+  .fam.pics .fgrp:nth-child(2) .pgrid{grid-template-columns:minmax(0,1fr)}
+  .fam.pics .fgrp:nth-child(2) .pav{aspect-ratio:16/6}
+}

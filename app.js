@@ -161,7 +161,7 @@
             : '<div class="pav ph" aria-hidden="true">' + (real ? '<svg viewBox="0 0 100 100"><circle cx="50" cy="38" r="17"/><path d="M16 94c2-24 16-36 34-36s32 12 34 36z"/></svg>' : tileDraw(k + gi)) + '</div>';
           return '<div class="pcard' + (p.photo ? '' : ' ph') + '" style="--i:' + (gi * 6 + k) + '">' + av +
             ((p.name || p.relation || p.note || !p.photo) ? '<div class="ptx"><b>' + esc(p.name || (p.relation ? '' : 'Name')) + '</b><span class="rel">' + esc(p.relation || (p.photo ? '' : 'Relationship')) + '</span>' : '<div class="ptx" hidden>') +
-            (p.note ? '<span class="nt">' + esc(p.note) + '</span>' : '') + '</div></div>';
+            (p.note ? '<span class="nt">' + esc(p.note) + '</span>' : '') + (p.thanks ? '<span class="th">' + esc(p.thanks) + '</span>' : '') + '</div></div>';
         }) + '</div></div>';
     });
     return section('family', 'Family and Friends', head('Family and Friends', f.heading || 'Family and Friends') + '<div class="fam' + (groups.some(function (g) { return has(g.people); }) ? ' pics' + (groups.length === 1 ? ' one' : '') : '') + '">' + inner + '</div>');

@@ -29,9 +29,9 @@ window.PORTFOLIO = {
     heading: "Family and Friends",
     groups: [
       { key: "Family", people: [
-        { name: "Evangeline B. Galang", relation: "Mother", note: "53 years old", photo: "fam-1.jpg" },
-        { name: "Nestor A. Galang", relation: "Father", note: "51 years old", photo: "fam-2.jpg" },
-        { name: "Raphael Neo B. Galang", relation: "Sibling", note: "16 years old", photo: "fr-1.jpg" }
+        { name: "Evangeline B. Galang", relation: "Mother", note: "53 years old", thanks: "Thank you, Mom, for your love and care.", photo: "fam-1.jpg" },
+        { name: "Nestor A. Galang", relation: "Father", note: "51 years old", thanks: "Thank you, Dad, for working hard for us.", photo: "fam-2.jpg" },
+        { name: "Raphael Neo B. Galang", relation: "Sibling", note: "16 years old", thanks: "Thank you, bro, for always being there.", photo: "fr-1.jpg" }
       ] },
       { key: "Friends", people: [
         { name: "", relation: "Friend", photo: "", note: "" }   // blank for now. Add photo: "friend-1.jpg" later
