@@ -19,7 +19,7 @@ window.PORTFOLIO = {
     intro: "I graduated from Senior High School at Benguet National High School. I have the skills to set up and repair computer hardware components, and I am willing to learn and apply my skills whenever an opportunity comes.",
     role: "1st year · University of the Cordilleras · La Trinidad, Benguet",
     program: { short: "BSIT", full: "Bachelor of Science in Information Technology", major: "Major in Network and Security" },
-    photo: "me.jpg"         // your profile picture
+    photo: "me-full.jpg"         // your profile picture
   },
 
   // ---- PAGE 4: FAMILY AND FRIENDS ----
@@ -29,10 +29,12 @@ window.PORTFOLIO = {
     heading: "Family and Friends",
     groups: [
       { key: "Family", people: [
-        // { name: "Name", relation: "Mother", photo: "family-1.jpg", note: "short line (optional)" },
+        { name: "Evangeline B. Galang", relation: "Mother", note: "53 years old", photo: "fam-1.jpg" },
+        { name: "Nestor A. Galang", relation: "Father", note: "51 years old", photo: "fam-2.jpg" },
+        { name: "Raphael Neo B. Galang", relation: "Sibling", note: "16 years old", photo: "fr-1.jpg" }
       ] },
       { key: "Friends", people: [
-        // { name: "Name", relation: "Classmate", photo: "friend-1.jpg", note: "short line (optional)" },
+        { name: "", relation: "Friend", photo: "", note: "" }   // blank for now. Add photo: "friend-1.jpg" later
       ] }
     ]
   },

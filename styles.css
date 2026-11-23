@@ -1390,3 +1390,88 @@ main.wrap>#v-family>.fam{flex:1 1 0;min-height:min-content;display:grid;grid-tem
   main.wrap>#v-family>.fam{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 }
 @media(prefers-reduced-motion:reduce){.pcard{animation:none!important}.pcard:hover,.pcard:hover .pav{transform:none}}
+
+/* ===== homepage: full-length photo, big and easy to see ===== */
+#v-home .split-pic .portrait.photo{width:auto;max-width:100%;height:min(66vh,720px);aspect-ratio:2/3;border-radius:28px}
+#v-home .split-pic .portrait.photo img{border-radius:28px;border:5px solid var(--accent);object-fit:cover;object-position:50% 30%;background:#fff;box-shadow:0 22px 60px rgba(0,0,0,.38)}
+#v-home .split-pic .portrait.photo::before{display:none}
+#v-home .split-pic .portrait.photo::after{border-radius:28px}
+#v-home .split-pic .portrait.photo:hover img{border-color:var(--fg)}
+@media(max-height:700px){#v-home .split-pic .portrait.photo{height:min(62vh,720px)}}
+@media(max-width:820px){#v-home .split-pic .portrait.photo{height:min(34vh,330px);margin-top:0;border-radius:20px}#v-home .split-pic .portrait.photo img{border-radius:20px;border-width:4px}}
+@media(max-width:900px) and (max-height:520px) and (orientation:landscape){#v-home .split-pic .portrait.photo{height:min(68vh,300px)}}
+@media(max-width:480px){.links a{font-size:9.5px;letter-spacing:.02em;padding:7px 6px}.links{gap:0}}
+@media(max-width:350px){.links a{font-size:8.5px;padding:7px 4px;letter-spacing:0}}
+@media(max-width:380px){.links a{font-size:9px;padding:7px 4px}.pill{padding-left:4px}}
+@media(max-width:340px){.links a{font-size:8.5px;padding:7px 3px}}
+
+/* Family photos: big landscape cards */
+main.wrap>#v-family>.fam.pics{grid-template-columns:minmax(0,3fr) minmax(0,1fr)}
+.fam.pics .pgrid{grid-template-columns:repeat(var(--n,3),minmax(0,1fr))}
+.fam.pics .fgrp:nth-child(2) .pgrid{--n:1}
+.fam.pics .pcard{flex-direction:column;align-items:stretch;gap:calc(var(--s)*.3);padding:calc(var(--s)*.3)}
+.fam.pics .pav{width:100%;height:auto;aspect-ratio:3/4;border-radius:calc(var(--s)*.6);border-width:3px}
+.fam.pics .pav img{object-position:50% 30%}
+.fam.pics .ptx[hidden]{display:none}
+.fam.pics .ptx{text-align:center}
+@media(max-width:900px){
+  main.wrap>#v-family>.fam.pics{grid-template-columns:minmax(0,1fr)}
+  .fam.pics .pgrid{grid-template-columns:repeat(var(--n,3),minmax(0,1fr))}
+  .fam.pics .pav{width:100%;height:auto;aspect-ratio:1/1}
+}
+@media(max-width:600px){
+  .fam.pics .pgrid,.fam.pics .fgrp:nth-child(2) .pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fam.pics .pav{aspect-ratio:4/3}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:520px){
+  main.wrap>#v-family>.fam.pics{grid-template-columns:minmax(0,3fr) minmax(0,1fr)}
+  .fam.pics .pgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .fam.pics .fgrp:nth-child(2) .pgrid{grid-template-columns:minmax(0,1fr)}
+  .fam.pics .pav{aspect-ratio:1/1}
+}
+
+/* single group (Family only): one row of 5 */
+main.wrap>#v-family>.fam.pics.one{grid-template-columns:minmax(0,1fr)}
+.fam.pics.one .pgrid,.fam.pics.one .fgrp:nth-child(2) .pgrid{grid-template-columns:repeat(5,minmax(0,1fr))}
+.fam.pics.one .pav{aspect-ratio:3/4}
+.fam.pics .ptx .rel{font-size:calc(var(--s)*1.15);color:var(--fg);text-align:center;margin:0}
+@media(max-width:900px){
+  .fam.pics.one .pgrid,.fam.pics.one .fgrp:nth-child(2) .pgrid{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .fam.pics.one .pcard{grid-column:span 2}
+  .fam.pics.one .pcard:nth-child(4){grid-column:2/span 2}
+  .fam.pics.one .pcard:nth-child(5){grid-column:4/span 2}
+  .fam.pics.one .pav{aspect-ratio:4/3}
+}
+@media(max-width:600px){
+  .fam.pics.one .pcard{grid-column:span 3}
+  .fam.pics.one .pcard:nth-child(4){grid-column:span 3}
+  .fam.pics.one .pcard:nth-child(5){grid-column:1/-1;width:calc(50% - var(--s)*.2);justify-self:center}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:520px){
+  .fam.pics.one .pgrid,.fam.pics.one .fgrp:nth-child(2) .pgrid{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .fam.pics.one .pcard,.fam.pics.one .pcard:nth-child(n){grid-column:auto}
+}
+
+.pav.ph svg{fill:var(--muted);opacity:.45;padding:12%}
+.fam.pics .pcard.ph .ptx{opacity:1}
+@media(max-width:600px){
+  main.wrap>#v-family>.fam.pics{grid-template-columns:minmax(0,1fr)}
+  .fam.pics .fgrp:nth-child(2) .pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:520px){
+  main.wrap>#v-family>.fam.pics{grid-template-columns:minmax(0,3fr) minmax(0,1fr)}
+  .fam.pics .fgrp:nth-child(2) .pgrid{grid-template-columns:minmax(0,1fr)}
+}
+@media(min-width:901px){.fam.pics .pav{aspect-ratio:4/5}}
+@media(min-width:901px) and (max-height:780px){.fam.pics .pav{aspect-ratio:1/1}}
+@media(min-width:601px) and (max-width:900px){
+  .fam.pics .fgrp:nth-child(2) .pgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .fam.pics .pav{aspect-ratio:1/1}
+}
+
+/* family captions: name, role, age */
+.fam.pics .ptx{gap:2px;padding-bottom:calc(var(--s)*.1)}
+.fam.pics .ptx b{font-size:calc(var(--s)*1.05);line-height:1.15;text-align:center;overflow-wrap:normal;text-wrap:balance}
+.fam.pics .ptx .rel{font-size:calc(var(--s)*.9);color:var(--accent);font-weight:700;margin:0}
+.fam.pics .ptx .nt{display:block;font-size:calc(var(--s)*.85);color:var(--fg);text-align:center;margin:0;font-weight:600}
+@media(max-width:600px){.fam.pics .ptx b{font-size:calc(var(--s)*.95)}.fam.pics .ptx .rel,.fam.pics .ptx .nt{font-size:calc(var(--s)*.8)}}

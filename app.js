@@ -151,19 +151,20 @@
   function family() {
     var f = D.family; if (!f) { return ''; }
     var groups = f.groups || [];
+    if (groups.some(function (g) { return has(g.people); })) { groups = groups.filter(function (g) { return has(g.people); }); }
     var inner = each(groups, function (g, gi) {
       var real = has(g.people), list = real ? g.people : [{}, {}, {}];
       return '<div class="fgrp" style="--g:' + gi + '" role="group" aria-label="' + esc(g.key) + '"><h3 class="cat-h"><span>' + esc(g.key) + '</span>' + (real ? '<b>' + list.length + '</b>' : '') + '</h3><div class="pgrid">' +
         each(list, function (p, k) {
           var av = p.photo
             ? '<button type="button" class="pav" data-f="' + (famPhoto++) + '" aria-label="View photo of ' + esc(p.name || 'person') + '"><img src="' + esc(p.photo) + '" alt="" loading="lazy"></button>'
-            : '<div class="pav ph" aria-hidden="true">' + tileDraw(k + gi) + '</div>';
-          return '<div class="pcard' + (real ? '' : ' ph') + '" style="--i:' + (gi * 6 + k) + '">' + av +
-            '<div class="ptx"><b>' + esc(p.name || 'Name') + '</b><span class="rel">' + esc(p.relation || 'Relationship') + '</span>' +
+            : '<div class="pav ph" aria-hidden="true">' + (real ? '<svg viewBox="0 0 100 100"><circle cx="50" cy="38" r="17"/><path d="M16 94c2-24 16-36 34-36s32 12 34 36z"/></svg>' : tileDraw(k + gi)) + '</div>';
+          return '<div class="pcard' + (p.photo ? '' : ' ph') + '" style="--i:' + (gi * 6 + k) + '">' + av +
+            ((p.name || p.relation || p.note || !p.photo) ? '<div class="ptx"><b>' + esc(p.name || (p.relation ? '' : 'Name')) + '</b><span class="rel">' + esc(p.relation || (p.photo ? '' : 'Relationship')) + '</span>' : '<div class="ptx" hidden>') +
             (p.note ? '<span class="nt">' + esc(p.note) + '</span>' : '') + '</div></div>';
         }) + '</div></div>';
     });
-    return section('family', 'Family and Friends', head('Family and Friends', f.heading || 'Family and Friends') + '<div class="fam">' + inner + '</div>');
+    return section('family', 'Family and Friends', head('Family and Friends', f.heading || 'Family and Friends') + '<div class="fam' + (groups.some(function (g) { return has(g.people); }) ? ' pics' + (groups.length === 1 ? ' one' : '') : '') + '">' + inner + '</div>');
   }
 
   function education() {
