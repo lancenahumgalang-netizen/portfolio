@@ -1482,3 +1482,20 @@ main.wrap>#v-family>.fam.pics.one{grid-template-columns:minmax(0,1fr)}
   .fam.pics .fgrp:nth-child(2) .pgrid{grid-template-columns:minmax(0,1fr)}
   .fam.pics .fgrp:nth-child(2) .pav{aspect-ratio:16/6}
 }
+
+/* friends group photo: wide landscape card */
+@media(min-width:901px){
+  main.wrap>#v-family>.fam.pics:has(.fgrp:nth-child(2) .pav:not(.ph)){grid-template-columns:minmax(0,5fr) minmax(0,3fr)}
+  .fam.pics .fgrp:nth-child(2) .pav:not(.ph){aspect-ratio:4/3}
+  .fam.pics .fgrp:nth-child(2) .pav img{object-position:50% 40%}
+}
+@media(max-width:600px){.fam.pics .fgrp:nth-child(2) .pav:not(.ph){aspect-ratio:16/10}}
+@media(min-width:601px) and (max-width:900px){
+  .fam.pics .fgrp:nth-child(2) .pgrid{grid-template-columns:minmax(0,1fr)}
+  .fam.pics .fgrp:nth-child(2) .pav:not(.ph){aspect-ratio:16/9;max-height:34vh}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:520px){
+  main.wrap>#v-family>.fam.pics{grid-template-columns:minmax(0,5fr) minmax(0,3fr)}
+  .fam.pics .fgrp:nth-child(2) .pav:not(.ph){aspect-ratio:4/3}
+}
+@media(max-width:600px){.fam.pics .fgrp:nth-child(2) .pav:not(.ph){aspect-ratio:2/1}.fam.pics .fgrp:nth-child(2) .pav img{object-position:50% 38%}}

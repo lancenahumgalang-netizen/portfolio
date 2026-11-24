@@ -34,7 +34,7 @@ window.PORTFOLIO = {
         { name: "Raphael Neo B. Galang", relation: "Sibling", note: "16 years old", thanks: "Thank you, bro, for always being there.", photo: "fr-1.jpg" }
       ] },
       { key: "Friends", people: [
-        { name: "", relation: "Friend", photo: "", note: "" }   // blank for now. Add photo: "friend-1.jpg" later
+        { name: "", relation: "Friends", photo: "friends.jpg", note: "From left to right: Lance Nahum Galang, Carevhine Jesus Arances, Carlos David Blanca, Seth Daniel Fernandez" }
       ] }
     ]
   },
@@ -48,6 +48,8 @@ window.PORTFOLIO = {
       { label: "Status", value: "Single" },
       { label: "Age", value: "{age} years old" },
       { label: "Birthday", value: "{birthday}" },
+      { label: "Blood type", value: "AB" },
+      { label: "Color of eyes", value: "Brown" },
       { label: "Program", value: "Bachelor of Science in Information Technology" },
       { label: "College", value: "College of Information Technology and Computer Science (CITCS)" },
       { label: "Year level", value: "1st year" },
