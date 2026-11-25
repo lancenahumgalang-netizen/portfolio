@@ -204,7 +204,7 @@
   var full = D.name.first + ' ' + D.name.middle + ' ' + D.name.last;
 
   var menu = '<nav aria-label="Pages"><div class="pill">' +
-    '<div class="links">' + each(nav, function (n) { return '<a href="#' + n.id + '" data-go="' + n.id + '"><span class="nf">' + esc(n.label) + '</span><span class="ns">' + esc(String(n.label).split(' ')[0]) + '</span></a>'; }) + '</div>' +
+    '<div class="links">' + each(nav.filter(function (n) { return n.id !== 'home'; }), function (n) { return '<a href="#' + n.id + '" data-go="' + n.id + '"><span class="nf">' + esc(n.label) + '</span><span class="ns">' + esc(String(n.label).split(' ')[0]) + '</span></a>'; }) + '</div>' +
     '<button class="tsw" type="button" id="theme" role="switch" aria-checked="true" aria-label="Dark theme" title="Switch between dark and light">' +
     '<svg class="moon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8z" fill="currentColor"/></svg>' +
     '<svg class="sun" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><g stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1"/></g></svg>' +
