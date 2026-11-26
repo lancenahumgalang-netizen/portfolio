@@ -50,6 +50,8 @@ window.PORTFOLIO = {
       { label: "Birthday", value: "{birthday}" },
       { label: "Blood type", value: "B+ (Positive)" },
       { label: "Color of eyes", value: "Brown" },
+      { label: "Height", value: "5'6\" (168 cm)" },
+      { label: "Weight", value: "54 kg" },
       { label: "Program", value: "Bachelor of Science in Information Technology" },
       { label: "College", value: "College of Information Technology and Computer Science (CITCS)" },
       { label: "Year level", value: "1st year" },
