@@ -116,9 +116,7 @@
         '<button type="button" data-copy="' + esc(v) + '">Copy</button></div>';
     }
     var fbLink = c.facebook && (c.facebook.link || ('https://www.facebook.com/search/top?q=' + encodeURIComponent(c.facebook.name)));
-    var contact = '<div class="homec"><div class="eyebrow">Contact</div>' + row('Email', c.email, 'mailto:' + c.email) +
-      (c.phone ? row('Phone', c.phone, 'tel:' + c.phone) : '') +
-      (c.facebook && c.facebook.name ? row('Facebook', c.facebook.name, fbLink) : '') + '</div>';
+    var contact = '';
     return section('home', 'Home Page',
       '<div class="split">' +
       '<div class="split-pic"><div class="portrait' + (ph ? ' photo' : '') + '">' + pic + '</div></div>' +
@@ -139,7 +137,7 @@
     }
     var facts = each(a.facts || [], function (x) {
       var v = String(x.value).replace('{age}', age).replace('{birthday}', bd);
-      return '<div><dt>' + esc(x.label) + '</dt><dd>' + esc(v) + '</dd></div>';
+      return '<div><dt>' + esc(x.label) + '</dt><dd>' + (x.href ? '<a class="fl" href="' + esc(x.href) + '">' + esc(v) + '</a>' : esc(v)) + '</dd></div>';
     });
     return section('about', 'Personal information',
       head('Personal information', a.heading || 'Personal Information') +

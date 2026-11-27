@@ -1499,3 +1499,6 @@ main.wrap>#v-family>.fam.pics.one{grid-template-columns:minmax(0,1fr)}
   .fam.pics .fgrp:nth-child(2) .pav:not(.ph){aspect-ratio:4/3}
 }
 @media(max-width:600px){.fam.pics .fgrp:nth-child(2) .pav:not(.ph){aspect-ratio:2/1}.fam.pics .fgrp:nth-child(2) .pav img{object-position:50% 38%}}
+
+.pinfo a.fl{color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:.18em;text-decoration-thickness:2px;overflow-wrap:anywhere}
+.pinfo a.fl:hover,.pinfo a.fl:focus-visible{text-decoration-thickness:3px;outline:none}

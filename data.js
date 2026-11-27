@@ -46,10 +46,12 @@ window.PORTFOLIO = {
       { label: "Name", value: "Lance Nahum Galang" },
       { label: "Gender", value: "Male" },
       { label: "Status", value: "Single" },
+      { label: "Nationality", value: "Filipino" },
       { label: "Age", value: "{age} years old" },
       { label: "Birthday", value: "{birthday}" },
       { label: "Blood type", value: "B+ (Positive)" },
       { label: "Color of eyes", value: "Brown" },
+      { label: "Hair color", value: "Black" },
       { label: "Height", value: "5'6\" (168 cm)" },
       { label: "Weight", value: "54 kg" },
       { label: "Program", value: "Bachelor of Science in Information Technology" },
@@ -59,8 +61,8 @@ window.PORTFOLIO = {
       { label: "Hobbies", value: "Badminton, Reading, Billiards" },
       { label: "Skills", value: "Basic computer set-up, Computer networking, Drafting (AutoCAD 2014)" },
       { label: "Address", value: "MB 482, Chinese Village, Puguis, La Trinidad, Benguet, 2601" },
-      { label: "Email", value: "lancenahumgalang@gmail.com" },
-      { label: "Phone number", value: "09203655160" }
+      { label: "Email", value: "lancenahumgalang@gmail.com", href: "mailto:lancenahumgalang@gmail.com" },
+      { label: "Phone number", value: "+63 920 365 5160", href: "tel:+639203655160" }
     ],
     birth: { month: 4, day: 28, year: 2008 },
     stats: [],
