@@ -137,11 +137,11 @@
     }
     var facts = each(a.facts || [], function (x) {
       var v = String(x.value).replace('{age}', age).replace('{birthday}', bd);
-      return '<div><dt>' + esc(x.label) + '</dt><dd>' + (x.href ? '<a class="fl" href="' + esc(x.href) + '">' + esc(v) + '</a>' : esc(v)) + '</dd></div>';
+      return '<div><dt>' + esc(x.label) + '</dt><dd>' + (x.href ? '<a class="fl" href="' + esc(x.href) + '"' + (/^https?:/.test(x.href) ? ' target="_blank" rel="noopener"' : '') + '>' + esc(v) + '</a>' : esc(v)) + '</dd></div>';
     });
     return section('about', 'Personal information',
       head('Personal information', a.heading || 'Personal Information') +
-      '<dl class="pinfo">' + facts + '</dl>');
+      '<dl class="pinfo" style="--r:' + Math.ceil((a.facts || []).length / 4) + '">' + facts + '</dl>');
   }
 
 
@@ -202,7 +202,7 @@
   var full = D.name.first + ' ' + D.name.middle + ' ' + D.name.last;
 
   var menu = '<nav aria-label="Pages"><div class="pill">' +
-    '<div class="links">' + each(nav.filter(function (n) { return n.id !== 'home'; }), function (n) { return '<a href="#' + n.id + '" data-go="' + n.id + '"><span class="nf">' + esc(n.label) + '</span><span class="ns">' + esc(String(n.label).split(' ')[0]) + '</span></a>'; }) + '</div>' +
+    '<a class="homebtn" href="#home" data-go="home" aria-label="Home page"><svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 7.5L8 2.5l6 5M3.7 6.6V13.5h3V9.8h2.6v3.7h3V6.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Home</span></a>' + '<div class="links">' + each(nav.filter(function (n) { return n.id !== 'home'; }), function (n) { return '<a href="#' + n.id + '" data-go="' + n.id + '"><span class="nf">' + esc(n.label) + '</span><span class="ns">' + esc(String(n.label).split(' ')[0]) + '</span></a>'; }) + '</div>' +
     '<button class="tsw" type="button" id="theme" role="switch" aria-checked="true" aria-label="Dark theme" title="Switch between dark and light">' +
     '<svg class="moon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8z" fill="currentColor"/></svg>' +
     '<svg class="sun" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><g stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1"/></g></svg>' +
@@ -485,6 +485,16 @@
       try {
         navigator.clipboard.writeText(v).then(function () { say('Copied: ' + v); }, function () { say('Select the text and press Ctrl+C'); });
       } catch (err) { say('Select the text and press Ctrl+C'); }
+    });
+  });
+
+  // phone link: opens the dialer on phones; on a computer it copies the number
+  [].slice.call(document.querySelectorAll('a.fl[href^="tel:"]')).forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+        var v = a.textContent;
+        try { navigator.clipboard.writeText(v).then(function () { say('Phone number copied: ' + v); }, function () { say('Phone: ' + v); }); } catch (err) { say('Phone: ' + v); }
+      }
     });
   });
 
